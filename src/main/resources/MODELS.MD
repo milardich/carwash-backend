@@ -4,9 +4,13 @@
 
 ### STATION
 - station_id
-- station_name (Osijek-1)
-- location_id
 - number_of_washes
+- station_name (Osijek-1)
+- city
+- street
+- number
+- country
+
 - ###### List of units
 > One station has many washing units. 
 
@@ -42,14 +46,5 @@
 - resource_amount (50657 liters)
 > Resources available to the station (water, wax, detergent)
 
----
-
-### LOCATION
-- location_id
-- city
-- street
-- number
-- country
-> One station is located at one location
 
 ---
