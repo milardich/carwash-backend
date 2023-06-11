@@ -35,7 +35,7 @@
 
 
 
-# Update station
+# ***❓ TODO:*** Update station
 ###### Updates single station by id
 - method: `UPDATE`
 - endpoint: `/api/station/{stationId}`
@@ -84,7 +84,6 @@
      {
        "unitId": 3,
        "status": "IN_USE",
-       "numberOfWashes": 46,
        "coinTrayAmount": 259,
        "totalWaterConsumption": 4483.51,
        "totalDetergentConsumption": 674.77,
@@ -93,7 +92,6 @@
      {
        "unitId": 4,
        "status": "AVAILABLE",
-       "numberOfWashes": 23,
        "coinTrayAmount": 123,
        "totalWaterConsumption": 2374.51,
        "totalDetergentConsumption": 542.2,
@@ -102,7 +100,6 @@
      {
        "unitId": 5,
        "status": "INACTIVE",
-       "numberOfWashes": 12,
        "coinTrayAmount": 67,
        "totalWaterConsumption": 443.51,
        "totalDetergentConsumption": 142.77,
@@ -137,7 +134,6 @@
         {
           "unitId": 3,
           "status": "IN_USE",
-          "numberOfWashes": 46,
           "coinTrayAmount": 259,
           "totalWaterConsumption": 4483.53,
           "totalDetergentConsumption": 674.56,
@@ -156,7 +152,6 @@
         {
           "unitId": 7,
           "status": "AVAILABLE",
-          "numberOfWashes": 2,
           "coinTrayAmount": 532,
           "totalWaterConsumption": 5231.55,
           "totalDetergentConsumption": 312.21,
@@ -215,6 +210,28 @@
 
 
 
+# ***❓ TODO:*** Get unit
+###### Fetches unit by id
+- method: `GET`
+- endpoint: `/api/station/{stationId}/unit/{unitId}`
+##### Request body: `EMPTY`
+##### Response body:
+```json
+{
+    "unitId": 5,
+    "status": "IN_USE",
+    "numberOfWashes": 46,
+    "coinTrayAmount": 259,
+    "totalWaterConsumption": 4483.21,
+    "totalDetergentConsumption": 674.11,
+    "totalWaxConsumption": 351.87
+}
+```
+##### Response status: `200 OK`
+
+---
+
+
 # Update unit status
 ###### Updates status of a single unit. Status can be IN_USE, AVAILABLE, INACTIVE
 - method: `PATCH`
@@ -222,19 +239,18 @@
 ##### Request body:
 ```json
 {
-  "status": "INACTIVE"
+  "status": "IN_USE"
 }
 ```
 ##### Response body:
 ```json
 {
-  "unitId": 6,
-  "status": "INACTIVE",
-  "numberOfWashes": 55,
-  "coinTrayAmount": 331,
-  "totalWaterConsumption": 6123.51,
-  "totalDetergentConsumption": 123.75,
-  "totalWaxConsumption": 231.53
+  "unitId": 11,
+  "status": "IN_USE",
+  "coinTrayAmount": 0,
+  "totalWaterConsumption": 421.5,
+  "totalDetergentConsumption": 51.21,
+  "totalWaxConsumption": 61.2
 }
 ```
 ##### Response status: `200 OK`
@@ -250,22 +266,23 @@
 ##### Request body:
 ```json
 {
-  "water_consumption": 10,
-  "detergent_consumption": 1,
-  "wax_consumption": 2,
-  "coin_amount": 3
+  "waterConsumption": 9.66,
+  "detergentConsumption": 1.92,
+  "waxConsumption": 5.61,
+  "coinAmount": 3
 }
 ```
 ##### Response body:
 ```json
 {
-  "stationId": 5,
-  "unitId": 2,
-  "wash_cycle_date": "2023-5-18 15:43:51",
-  "coin_amount": 3,
-  "water_consumption": 10.56,
-  "detergent_consumption": 1.14,
-  "wax_consumption": 2.41
+  "washCycleId": 7,
+  "stationId": 2,
+  "unitId": 9,
+  "washCycleDate": "2023-06-11T22:12:35.685576",
+  "coinAmount": 7,
+  "waterConsumption": 9.66,
+  "detergentConsumption": 1.92,
+  "waxConsumption": 5.61
 }
 ```
 ##### Response status: `200 OK`
@@ -273,3 +290,74 @@
 ---
 
 
+
+# Get wash cycle
+###### Fetch wash cycle by id
+- method: `GET`
+- endpoint: `/api/station/{stationId}/unit/{unitId}/wash-cycle{washCycleId}`
+##### Request body: `EMPTY`
+##### Response body:
+```json
+{
+  "washCycleId": 7,
+  "stationId": 2,
+  "unitId": 9,
+  "washCycleDate": "2023-06-11T22:12:35.685576",
+  "coinAmount": 7,
+  "waterConsumption": 9.66,
+  "detergentConsumption": 1.92,
+  "waxConsumption": 5.61
+}
+```
+##### Response status: `200 OK`
+
+---
+
+
+
+# ***❓ TODO:*** Get single unit's wash cycles
+###### Fetches all wash cycles by unit id
+- method: `GET`
+- endpoint: `/api/station/{stationId}/unit/{unitId}/wash-cycle/all`
+##### Request body: `EMPTY`
+##### Response body:
+```json
+{
+  "washCycles": [
+    {
+      "washCycleId": 7,
+      "stationId": 2,
+      "unitId": 9,
+      "washCycleDate": "2023-06-11T22:12:35.685576",
+      "coinAmount": 7,
+      "waterConsumption": 9.66,
+      "detergentConsumption": 1.92,
+      "waxConsumption": 5.61
+    },
+    {
+      "washCycleId": 8,
+      "stationId": 2,
+      "unitId": 9,
+      "washCycleDate": "2023-06-11T22:12:35.685576",
+      "coinAmount": 7,
+      "waterConsumption": 9.66,
+      "detergentConsumption": 1.92,
+      "waxConsumption": 5.61
+    }
+  ]
+}
+```
+##### Response status: `200 OK`
+
+---
+
+
+
+
+# ***❓ TODO:*** Get station's wash cycles 
+
+---
+
+
+
+# ***❓ TODO:*** Get station's wash cycles from and to specific date and time
