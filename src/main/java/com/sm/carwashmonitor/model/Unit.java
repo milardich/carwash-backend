@@ -1,10 +1,13 @@
 package com.sm.carwashmonitor.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sm.carwashmonitor.model.enumeration.UnitStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "unit")
@@ -36,4 +39,8 @@ public class Unit {
 
     @Column(name = "total_wax_consumption")
     private Float totalWaxConsumption;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "unit")
+    private List<WashCycle> washCycles;
 }
