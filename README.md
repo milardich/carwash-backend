@@ -318,7 +318,8 @@
 # ***❓ TODO:*** Get single unit's wash cycles
 ###### Fetches all wash cycles by unit id
 - method: `GET`
-- endpoint: `/api/station/{stationId}/unit/{unitId}/wash-cycle/all`
+- endpoint: `/api/station/{stationId}/unit/{unitId}/wash-cycle/??????`
+- pagination: `TRUE`
 ##### Request body: `EMPTY`
 ##### Response body:
 ```json
@@ -354,10 +355,10 @@
 
 
 
-# ***❓ TODO:*** Get station's wash cycles 
+# ***❓ TODO:*** Get station's wash cycles (with pagination)
 
 ---
 
 
 
-# ***❓ TODO:*** Get station's wash cycles from and to specific date and time
+# ***❓ TODO:*** Get station's wash cycles filtered by time (with pagination)
