@@ -16,4 +16,12 @@ public interface UnitMapper {
     @Mapping(target = "totalDetergentConsumption", source = "totalDetergentConsumption")
     @Mapping(target = "totalWaxConsumption", source = "totalWaxConsumption")
     Unit toEntity(UnitDto unitDto);
+
+    @Mapping(target = "unitId", source = "unitId")
+    @Mapping(target = "status", source = "status")
+    @Mapping(target = "coinTrayAmount", source = "coinTrayAmount")
+    @Mapping(target = "totalWaterConsumption", source = "totalWaterConsumption")
+    @Mapping(target = "totalDetergentConsumption", source = "totalDetergentConsumption")
+    @Mapping(target = "totalWaxConsumption", source = "totalWaxConsumption")
+    UnitDto toDto(Unit unit);
 }
