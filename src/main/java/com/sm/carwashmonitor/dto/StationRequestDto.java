@@ -11,6 +11,6 @@ public class StationRequestDto {
     private String stationName;
     private String city;
     private String streetName;
-    private Integer streetNumber;
+    private String streetNumber;
     private String country;
 }

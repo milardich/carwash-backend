@@ -6,6 +6,7 @@ import com.sm.carwashmonitor.mapper.StationMapper;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.service.StationService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +32,11 @@ public class StationServiceImpl implements StationService {
     @Override
     public StationResponseDto getStation(Long stationId) {
         Optional<Station> station = stationRepository.findById(stationId);
-        StationResponseDto response = new StationResponseDto();
+        StationResponseDto response;
         if(station.isPresent()) {
             response = stationMapper.toDto(station.get());
         } else {
-            throw new RuntimeException("Station with id " + stationId + " does not exist");
+            throw new EntityNotFoundException("Station not found");
         }
         return response;
     }
