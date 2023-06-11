@@ -16,6 +16,7 @@ public interface WashCycleMapper {
     @Mapping(target = "coinAmount", source = "coinAmount")
     WashCycle toEntity(WashCycleRequestDto washCycleRequestDto);
 
+    @Mapping(target = "washCycleId", source = "washCycleId")
     @Mapping(target = "waterConsumption", source = "waterConsumption")
     @Mapping(target = "washCycleDate", source = "washCycleDate")
     @Mapping(target = "detergentConsumption", source = "detergentConsumption")

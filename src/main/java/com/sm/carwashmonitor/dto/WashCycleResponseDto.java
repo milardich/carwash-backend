@@ -6,6 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WashCycleResponseDto {
+    private Long washCycleId;
+    private Long stationId;
     private Long unitId;
     private String washCycleDate;
     private Integer coinAmount;

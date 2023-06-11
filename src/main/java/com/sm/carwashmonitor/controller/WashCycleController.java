@@ -20,4 +20,12 @@ public class WashCycleController {
     ) {
         return washCycleService.createNewWashCycle(stationId, unitId, washCycleRequestDto);
     }
+
+    @GetMapping("/{washCycleId}")
+    public WashCycleResponseDto getWashCycle(@PathVariable(name = "stationId") Long stationId,
+                                             @PathVariable(name = "unitId") Long unitId,
+                                             @PathVariable(name = "washCycleId") Long washCycleId
+    ) {
+        return washCycleService.getWashCycle(stationId, unitId, washCycleId);
+    }
 }

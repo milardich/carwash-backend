@@ -46,4 +46,32 @@ public class WashCycleServiceImpl implements WashCycleService {
         washCycleResponseDto.setUnitId(unit.get().getUnitId());
         return washCycleResponseDto;
     }
+
+    @Override
+    public WashCycleResponseDto getWashCycle(Long stationId, Long unitId, Long washCycleId) {
+        // TODO: validate
+        Optional<Station> station = stationRepository.findById(stationId);
+        if(station.isEmpty()) {
+            throw new EntityNotFoundException("Station not found");
+        }
+        Optional<Unit> unit = unitRepository.findById(unitId);
+        if(unit.isEmpty()) {
+            throw new EntityNotFoundException("Unit not found");
+        }
+        if(!station.get().getUnits().contains(unit.get())) {
+            throw new EntityNotFoundException("Station does not contain unit with id " + unitId);
+        }
+        Optional<WashCycle> washCycle = washCycleRepository.findById(washCycleId);
+        if(washCycle.isEmpty()) {
+            throw new EntityNotFoundException("Wash cycle not found");
+        }
+        if(!unit.get().getWashCycles().contains(washCycle.get())) {
+            throw new EntityNotFoundException("Unit does not contain wash cycle with id " + washCycleId);
+        }
+        WashCycleResponseDto washCycleResponseDto = washCycleMapper.toDto(washCycle.get());
+        washCycleResponseDto.setWashCycleDate(washCycle.get().getWashCycleDate().toString());
+        washCycleResponseDto.setStationId(stationId);
+        washCycleResponseDto.setUnitId(washCycle.get().getUnit().getUnitId());
+        return washCycleResponseDto;
+    }
 }
