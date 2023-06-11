@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,5 +26,29 @@ public class StationServiceImpl implements StationService {
         stationRepository.save(station);
         station.setUnits(new ArrayList<>());
         return stationMapper.toDto(station);
+    }
+
+    @Override
+    public StationResponseDto getStation(Long stationId) {
+        Optional<Station> station = stationRepository.findById(stationId);
+        StationResponseDto response = new StationResponseDto();
+        if(station.isPresent()) {
+            response = stationMapper.toDto(station.get());
+        } else {
+            throw new RuntimeException("Station with id " + stationId + " does not exist");
+        }
+        return response;
+    }
+
+    @Override
+    public List<StationResponseDto> getAllStations() {
+        List<Station> stations = stationRepository.findAll();
+        List<StationResponseDto> stationDtos = new ArrayList<>();
+        if(!stations.isEmpty()) {
+            stations.forEach(station -> {
+                stationDtos.add(stationMapper.toDto(station));
+            });
+        }
+        return stationDtos;
     }
 }
