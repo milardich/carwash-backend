@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class StationResponseDto {
+    private Long stationId;
     private String stationName;
     private String city;
     private String streetName;

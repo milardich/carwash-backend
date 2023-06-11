@@ -15,6 +15,7 @@ public interface StationMapper {
     @Mapping(target = "country", source = "country")
     Station toEntity(StationRequestDto dto);
 
+    @Mapping(target = "stationId", source = "stationId")
     @Mapping(target = "stationName", source = "stationName")
     @Mapping(target = "city", source = "city")
     @Mapping(target = "streetName", source = "streetName")

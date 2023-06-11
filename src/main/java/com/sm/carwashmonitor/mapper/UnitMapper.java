@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface UnitMapper {
 
+    @Mapping(target = "unitId", source = "unitId")
     @Mapping(target = "status", source = "status")
     @Mapping(target = "coinTrayAmount", source = "coinTrayAmount")
     @Mapping(target = "totalWaterConsumption", source = "totalWaterConsumption")
