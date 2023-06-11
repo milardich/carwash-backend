@@ -23,7 +23,7 @@ public class Unit {
     private Station station;
 
     @Column(name = "status")
-    private UnitStatus status;
+    private String status;
 
     @Column(name = "coin_tray_amount")
     private Integer coinTrayAmount;
