@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -73,5 +74,23 @@ public class WashCycleServiceImpl implements WashCycleService {
         washCycleResponseDto.setStationId(stationId);
         washCycleResponseDto.setUnitId(washCycle.get().getUnit().getUnitId());
         return washCycleResponseDto;
+    }
+
+    @Override
+    public List<WashCycleResponseDto> getFilteredWashCycles(Long stationId, Long unitId, LocalDateTime dateFrom, LocalDateTime dateTo) {
+        // TODO: validate
+        Optional<Station> station = stationRepository.findById(stationId);
+        if(station.isEmpty()) {
+            throw new EntityNotFoundException("Station not found");
+        }
+        Optional<Unit> unit = unitRepository.findById(unitId);
+        if(unit.isEmpty()) {
+            throw new EntityNotFoundException("Unit not found");
+        }
+        if(!station.get().getUnits().contains(unit.get())) {
+            throw new EntityNotFoundException("Station does not contain unit with id " + unitId);
+        }
+        List<WashCycle> filteredWashCycles = washCycleRepository.getFilteredWashCycles(unitId, dateFrom, dateTo);
+        return null;
     }
 }
