@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class WashCycleServiceImpl implements WashCycleService {
         washCycle.setWashCycleDate(LocalDateTime.now());
         washCycleRepository.save(washCycle);
         WashCycleResponseDto washCycleResponseDto = washCycleMapper.toDto(washCycle);
-        washCycleResponseDto.setUnitId(unit.get().getUnitId());
+        //washCycleResponseDto.setUnitId(unit.get().getUnitId());
         return washCycleResponseDto;
     }
 
@@ -72,7 +73,7 @@ public class WashCycleServiceImpl implements WashCycleService {
         WashCycleResponseDto washCycleResponseDto = washCycleMapper.toDto(washCycle.get());
         washCycleResponseDto.setWashCycleDate(washCycle.get().getWashCycleDate().toString());
         washCycleResponseDto.setStationId(stationId);
-        washCycleResponseDto.setUnitId(washCycle.get().getUnit().getUnitId());
+        //washCycleResponseDto.setUnitId(washCycle.get().getUnit().getUnitId());
         return washCycleResponseDto;
     }
 
@@ -91,6 +92,12 @@ public class WashCycleServiceImpl implements WashCycleService {
             throw new EntityNotFoundException("Station does not contain unit with id " + unitId);
         }
         List<WashCycle> filteredWashCycles = washCycleRepository.getFilteredWashCycles(unitId, dateFrom, dateTo);
-        return null;
+        List<WashCycleResponseDto> filteredWashCyclesResponse = new ArrayList<>();
+        filteredWashCycles.forEach(washCycle -> {
+            WashCycleResponseDto washCycleResponseDto = washCycleMapper.toDto(washCycle);
+            washCycleResponseDto.setStationId(stationId);
+            filteredWashCyclesResponse.add(washCycleResponseDto);
+        });
+        return filteredWashCyclesResponse;
     }
 }

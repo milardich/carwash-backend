@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "0ea5c288-4089-4a44-8cd8-898ba3538226",
+		"name": "CarwashMonitor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create new station",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"stationName\": \"Osijek-VIM-2\",\r\n  \"city\": \"Osijek\",\r\n  \"streetName\": \"Vukovarska cesta\",\r\n  \"streetNumber\": \"103\",\r\n  \"country\": \"Croatia\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/station",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get station by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/station/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all stations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/station",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create unit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/station/3/unit",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"3",
+						"unit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update unit status",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"status\": \"IN_USE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/station/3/unit/11/status",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"3",
+						"unit",
+						"11",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create wash cycle",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"waterConsumption\": 9.66,\r\n  \"detergentConsumption\": 1.92,\r\n  \"waxConsumption\": 5.61,\r\n  \"coinAmount\": 7\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/station/2/unit/9/wash-cycle",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"2",
+						"unit",
+						"9",
+						"wash-cycle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get wash cycle",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/station/2/unit/9/wash-cycle/7",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"2",
+						"unit",
+						"9",
+						"wash-cycle",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get filtered wash cycles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/station/2/unit/9/wash-cycle?dateTimeFrom=2023-06-11T21:00:00.000&dateTimeTo=2023-06-11T22:30:00.000",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"2",
+						"unit",
+						"9",
+						"wash-cycle"
+					],
+					"query": [
+						{
+							"key": "dateTimeFrom",
+							"value": "2023-06-11T21:00:00.000"
+						},
+						{
+							"key": "dateTimeTo",
+							"value": "2023-06-11T22:30:00.000"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

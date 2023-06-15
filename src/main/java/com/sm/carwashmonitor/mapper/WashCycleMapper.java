@@ -17,6 +17,7 @@ public interface WashCycleMapper {
     WashCycle toEntity(WashCycleRequestDto washCycleRequestDto);
 
     @Mapping(target = "washCycleId", source = "washCycleId")
+    @Mapping(target = "unitId", expression = "java(washCycle.getUnit().getUnitId())")
     @Mapping(target = "waterConsumption", source = "waterConsumption")
     @Mapping(target = "washCycleDate", source = "washCycleDate")
     @Mapping(target = "detergentConsumption", source = "detergentConsumption")
