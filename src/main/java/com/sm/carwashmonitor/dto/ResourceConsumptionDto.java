@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ResourceUsageDto {
+public class ResourceConsumptionDto {
     private LocalDateTime dateTime;
-    private Float usage;
+    private Float consumption;
 }

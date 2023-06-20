@@ -1,6 +1,6 @@
 package com.sm.carwashmonitor.service.impl;
 
-import com.sm.carwashmonitor.dto.ResourceUsageDto;
+import com.sm.carwashmonitor.dto.ResourceConsumptionDto;
 import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.model.Unit;
@@ -37,39 +37,47 @@ public class ResourceServiceImpl implements ResourceService {
             washCycles.addAll(washCycleRepository.getFilteredWashCyclesByUnitId(unit.getUnitId(), dateTimeFrom, dateTimeTo));
         });
 
-        return fillResourcesUsageDto(washCycles);
+        ResourcesUsageResponseDto resourcesUsageResponseDto = new ResourcesUsageResponseDto();
+        fillResourcesUsageResponseDto(resourcesUsageResponseDto, washCycles);
+        return resourcesUsageResponseDto;
     }
 
-    private ResourcesUsageResponseDto fillResourcesUsageDto(List<WashCycle> washCycles) {
-        ResourcesUsageResponseDto resourcesUsageResponseDto = new ResourcesUsageResponseDto();
-        resourcesUsageResponseDto.setDetergentUsages(new ArrayList<>());
-        resourcesUsageResponseDto.setWaxUsages(new ArrayList<>());
-        resourcesUsageResponseDto.setWaterUsages(new ArrayList<>());
-        resourcesUsageResponseDto.setTotalWaxConsumption(0.0F);
-        resourcesUsageResponseDto.setTotalWaterConsumption(0.0F);
-        resourcesUsageResponseDto.setTotalDetergentConsumption(0.0F);
-
+    private void fillResourcesUsageResponseDto(ResourcesUsageResponseDto resourcesUsageResponseDto, List<WashCycle> washCycles) {
         washCycles.forEach(washCycle -> {
-            ResourceUsageDto resourceUsageDto = new ResourceUsageDto();
-            Float totalUsage = 0.0F;
-            resourceUsageDto.setDateTime(washCycle.getWashCycleDate());
-
-            // Set usages
-            resourceUsageDto.setUsage(washCycle.getWaterConsumption());
-            resourcesUsageResponseDto.getWaterUsages().add(resourceUsageDto);
-            resourceUsageDto.setUsage(washCycle.getDetergentConsumption());
-            resourcesUsageResponseDto.getDetergentUsages().add(resourceUsageDto);
-            resourceUsageDto.setUsage(washCycle.getWaxConsumption());
-            resourcesUsageResponseDto.getWaxUsages().add(resourceUsageDto);
-
-            // Calculate total consumption
-            totalUsage = resourcesUsageResponseDto.getTotalDetergentConsumption() + washCycle.getDetergentConsumption();
-            resourcesUsageResponseDto.setTotalDetergentConsumption(totalUsage);
-            totalUsage = resourcesUsageResponseDto.getTotalWaterConsumption() + washCycle.getWaterConsumption();
-            resourcesUsageResponseDto.setTotalWaterConsumption(totalUsage);
-            totalUsage = resourcesUsageResponseDto.getTotalWaxConsumption() + washCycle.getWaxConsumption();
-            resourcesUsageResponseDto.setTotalWaxConsumption(totalUsage);
+            fillResourceConsumptions(resourcesUsageResponseDto, washCycle);
+            calculateTotalResourceConsumptions(resourcesUsageResponseDto, washCycle);
         });
-        return  resourcesUsageResponseDto;
+    }
+
+    private void fillResourceConsumptions(ResourcesUsageResponseDto resourcesUsageResponseDto, WashCycle washCycle) {
+        ResourceConsumptionDto waterConsumptionDto = new ResourceConsumptionDto();
+        waterConsumptionDto.setDateTime(washCycle.getWashCycleDate());
+        waterConsumptionDto.setConsumption(washCycle.getWaterConsumption());
+        resourcesUsageResponseDto.getWaterConsumptions().add(waterConsumptionDto);
+
+        ResourceConsumptionDto detergentConsumptionDto = new ResourceConsumptionDto();
+        detergentConsumptionDto.setDateTime(washCycle.getWashCycleDate());
+        detergentConsumptionDto.setConsumption(washCycle.getDetergentConsumption());
+        resourcesUsageResponseDto.getDetergentConsumptions().add(detergentConsumptionDto);
+
+        ResourceConsumptionDto waxConsumptionDto = new ResourceConsumptionDto();
+        waxConsumptionDto.setDateTime(washCycle.getWashCycleDate());
+        waxConsumptionDto.setConsumption(washCycle.getWaxConsumption());
+        resourcesUsageResponseDto.getWaxConsumptions().add(waxConsumptionDto);
+    }
+
+    private void calculateTotalResourceConsumptions(ResourcesUsageResponseDto resourcesUsageResponseDto, WashCycle washCycle) {
+        Float totalWaterUsage = 0.0F;
+        Float totalDetergentUsage = 0.0F;
+        Float totalWaxUsage = 0.0F;
+
+        totalWaterUsage = resourcesUsageResponseDto.getTotalWaterConsumption() + washCycle.getWaterConsumption();
+        resourcesUsageResponseDto.setTotalWaterConsumption(totalWaterUsage);
+
+        totalDetergentUsage = resourcesUsageResponseDto.getTotalDetergentConsumption() + washCycle.getDetergentConsumption();
+        resourcesUsageResponseDto.setTotalDetergentConsumption(totalDetergentUsage);
+
+        totalWaxUsage = resourcesUsageResponseDto.getTotalWaxConsumption() + washCycle.getWaxConsumption();
+        resourcesUsageResponseDto.setTotalWaxConsumption(totalWaxUsage);
     }
 }
