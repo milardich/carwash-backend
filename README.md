@@ -210,10 +210,13 @@
 
 
 
-# ***❓ TODO:*** Get unit
-###### Fetches unit by id
+# ***❓ TODO:*** Get unit's data
+###### Fetches unit's data filtered by datetime
 - method: `GET`
 - endpoint: `/api/station/{stationId}/unit/{unitId}`
+- request params:
+  - `dateTimeFrom`, example: *2023-06-11T21:00:00.000*, **(NOT REQUIRED)**
+  - `dateTimeTo`, example: *2023-06-23T22:30:00.000*, **(NOT REQUIRED)**
 ##### Request body: `EMPTY`
 ##### Response body:
 ```json
@@ -260,7 +263,7 @@
 
 
 # Create new wash cycle
-###### Creates a new wash cycle. A wash cycle is completed when a car finishes the entire washing process, tracking the amount of resources used and the number of coins required. One unit can have multiple wash cycles.
+###### Creates a new wash cycle. A wash cycle is completed when a car finishes the entire washing process, tracking the amount of resources used and number of coins used. One unit can have multiple wash cycles.
 - method: `POST`
 - endpoint: `/api/station/{stationId}/unit/{unitId}/wash-cycle`
 ##### Request body:
@@ -315,11 +318,13 @@
 
 
 
-# ***❓ TODO:*** Get single unit's wash cycles
-###### Fetches all wash cycles by unit id
+# Get unit's wash cycles
+###### Fetches unit's wash cycles filtered by datetime
 - method: `GET`
-- endpoint: `/api/station/{stationId}/unit/{unitId}/wash-cycle/??????`
-- pagination: `TRUE`
+- endpoint: `/api/station/{stationId}/unit/{unitId}/wash-cycle`
+- request params:
+    - `dateTimeFrom`, example: *2023-06-11T21:00:00.000*, **(NOT REQUIRED)**
+    - `dateTimeTo`, example: *2023-06-23T22:30:00.000*, **(NOT REQUIRED)**
 ##### Request body: `EMPTY`
 ##### Response body:
 ```json
@@ -354,11 +359,62 @@
 
 
 
-
-# ***❓ TODO:*** Get station's wash cycles (with pagination)
-
----
-
-
-
-# ***❓ TODO:*** Get station's wash cycles filtered by time (with pagination)
+# Get station's resource consumptions
+###### Fetches station's resources consumptions filtered by datetime
+- method: `GET`
+- endpoint: `/api/resources/station/{stationId}/resource-consumption`
+- request params:
+  - `dateTimeFrom`, example: *2023-06-11T21:00:00.000*, **(NOT REQUIRED)**
+  - `dateTimeTo`, example: *2023-06-23T22:30:00.000*, **(NOT REQUIRED)**
+##### Request body: `EMPTY`
+##### Response body:
+```json
+{
+  "totalWaterConsumption": 69.979996,
+  "totalDetergentConsumption": 40.760002,
+  "totalWaxConsumption": 77.83,
+  "waterConsumptions": [
+    {
+      "dateTime": "2023-06-11T22:14:35.685",
+      "consumption": 7.66
+    },
+    {
+      "dateTime": "2023-06-11T22:12:32.536697",
+      "consumption": 6.66
+    },
+    {
+      "dateTime": "2023-06-11T21:52:16.097",
+      "consumption": 55.66
+    }
+  ],
+  "detergentConsumptions": [
+    {
+      "dateTime": "2023-06-11T22:14:35.685",
+      "consumption": 17.92
+    },
+    {
+      "dateTime": "2023-06-11T22:12:32.536697",
+      "consumption": 16.92
+    },
+    {
+      "dateTime": "2023-06-11T21:52:16.097",
+      "consumption": 5.92
+    }
+  ],
+  "waxConsumptions": [
+    {
+      "dateTime": "2023-06-11T22:14:35.685",
+      "consumption": 3.6100001
+    },
+    {
+      "dateTime": "2023-06-11T22:12:32.536697",
+      "consumption": 41.61
+    },
+    {
+      "dateTime": "2023-06-11T21:52:16.097",
+      "consumption": 32.61
+    }
+  ]
+}
+```
+##### Response status: `200 OK`
