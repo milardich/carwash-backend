@@ -14,7 +14,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +90,7 @@ public class WashCycleServiceImpl implements WashCycleService {
         if(!station.get().getUnits().contains(unit.get())) {
             throw new EntityNotFoundException("Station does not contain unit with id " + unitId);
         }
-        List<WashCycle> filteredWashCycles = washCycleRepository.getFilteredWashCycles(unitId, dateFrom, dateTo);
+        List<WashCycle> filteredWashCycles = washCycleRepository.getFilteredWashCyclesByUnitId(unitId, dateFrom, dateTo);
         List<WashCycleResponseDto> filteredWashCyclesResponse = new ArrayList<>();
         filteredWashCycles.forEach(washCycle -> {
             WashCycleResponseDto washCycleResponseDto = washCycleMapper.toDto(washCycle);

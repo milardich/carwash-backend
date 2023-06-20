@@ -10,5 +10,8 @@ import java.util.List;
 public interface WashCycleRepository extends JpaRepository<WashCycle, Long> {
 
     @Query("SELECT washCycle FROM WashCycle washCycle WHERE washCycle.unit.unitId = :unitId AND washCycle.washCycleDate >= :dateTimeFrom AND washCycle.washCycleDate <= :dateTimeTo ORDER BY washCycle.washCycleDate DESC")
-    List<WashCycle> getFilteredWashCycles(Long unitId, LocalDateTime dateTimeFrom, LocalDateTime dateTimeTo);
+    List<WashCycle> getFilteredWashCyclesByUnitId(Long unitId, LocalDateTime dateTimeFrom, LocalDateTime dateTimeTo);
+
+    @Query("SELECT washCycle FROM WashCycle washCycle WHERE washCycle.unit.unitId = :unitId")
+    List<WashCycle> getWashCyclesByUnitId(Long unitId);
 }
