@@ -9,5 +9,5 @@ import java.time.LocalDateTime;
 @Setter
 public class ResourceUsageDto {
     private LocalDateTime dateTime;
-    private Float consumption;
+    private Float usage;
 }

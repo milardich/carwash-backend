@@ -45,18 +45,30 @@ public class ResourceServiceImpl implements ResourceService {
         resourcesUsageResponseDto.setDetergentUsages(new ArrayList<>());
         resourcesUsageResponseDto.setWaxUsages(new ArrayList<>());
         resourcesUsageResponseDto.setWaterUsages(new ArrayList<>());
+        resourcesUsageResponseDto.setTotalWaxConsumption(0.0F);
+        resourcesUsageResponseDto.setTotalWaterConsumption(0.0F);
+        resourcesUsageResponseDto.setTotalDetergentConsumption(0.0F);
+
         washCycles.forEach(washCycle -> {
             ResourceUsageDto resourceUsageDto = new ResourceUsageDto();
+            Float totalUsage = 0.0F;
             resourceUsageDto.setDateTime(washCycle.getWashCycleDate());
 
-            resourceUsageDto.setConsumption(washCycle.getWaterConsumption());
+            // Set usages
+            resourceUsageDto.setUsage(washCycle.getWaterConsumption());
             resourcesUsageResponseDto.getWaterUsages().add(resourceUsageDto);
-
-            resourceUsageDto.setConsumption(washCycle.getDetergentConsumption());
+            resourceUsageDto.setUsage(washCycle.getDetergentConsumption());
             resourcesUsageResponseDto.getDetergentUsages().add(resourceUsageDto);
-
-            resourceUsageDto.setConsumption(washCycle.getWaxConsumption());
+            resourceUsageDto.setUsage(washCycle.getWaxConsumption());
             resourcesUsageResponseDto.getWaxUsages().add(resourceUsageDto);
+
+            // Calculate total consumption
+            totalUsage = resourcesUsageResponseDto.getTotalDetergentConsumption() + washCycle.getDetergentConsumption();
+            resourcesUsageResponseDto.setTotalDetergentConsumption(totalUsage);
+            totalUsage = resourcesUsageResponseDto.getTotalWaterConsumption() + washCycle.getWaterConsumption();
+            resourcesUsageResponseDto.setTotalWaterConsumption(totalUsage);
+            totalUsage = resourcesUsageResponseDto.getTotalWaxConsumption() + washCycle.getWaxConsumption();
+            resourcesUsageResponseDto.setTotalWaxConsumption(totalUsage);
         });
         return  resourcesUsageResponseDto;
     }
