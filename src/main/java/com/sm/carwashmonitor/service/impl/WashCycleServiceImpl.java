@@ -44,7 +44,7 @@ public class WashCycleServiceImpl implements WashCycleService {
         washCycle.setWashCycleDate(LocalDateTime.now());
         washCycleRepository.save(washCycle);
         WashCycleResponseDto washCycleResponseDto = washCycleMapper.toDto(washCycle);
-        //washCycleResponseDto.setUnitId(unit.get().getUnitId());
+        washCycleResponseDto.setStationId(stationId);
         return washCycleResponseDto;
     }
 

@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "0ea5c288-4089-4a44-8cd8-898ba3538226",
+		"_postman_id": "08d18b95-8966-46d7-8ec3-be3c21bc110e",
 		"name": "CarwashMonitor",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28665374"
 	},
 	"item": [
 		{
@@ -12,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"stationName\": \"Osijek-VIM-2\",\r\n  \"city\": \"Osijek\",\r\n  \"streetName\": \"Vukovarska cesta\",\r\n  \"streetNumber\": \"103\",\r\n  \"country\": \"Croatia\"\r\n}",
+					"raw": "{\r\n  \"stationName\": \"Jankovci-1\",\r\n  \"city\": \"Stari Jankovci\",\r\n  \"streetName\": \"Vladimira Nazora\",\r\n  \"streetNumber\": \"15\",\r\n  \"country\": \"Croatia\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -39,7 +40,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/station/2",
+					"raw": "localhost:8080/api/station/1",
 					"host": [
 						"localhost"
 					],
@@ -47,7 +48,7 @@
 					"path": [
 						"api",
 						"station",
-						"2"
+						"1"
 					]
 				}
 			},
@@ -78,7 +79,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/station/3/unit",
+					"raw": "localhost:8080/api/station/1/unit",
 					"host": [
 						"localhost"
 					],
@@ -86,7 +87,7 @@
 					"path": [
 						"api",
 						"station",
-						"3",
+						"1",
 						"unit"
 					]
 				}
@@ -108,7 +109,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/station/3/unit/11/status",
+					"raw": "localhost:8080/api/station/1/unit/2/status",
 					"host": [
 						"localhost"
 					],
@@ -116,9 +117,9 @@
 					"path": [
 						"api",
 						"station",
-						"3",
+						"1",
 						"unit",
-						"11",
+						"2",
 						"status"
 					]
 				}
@@ -132,7 +133,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"waterConsumption\": 9.66,\r\n  \"detergentConsumption\": 1.92,\r\n  \"waxConsumption\": 5.61,\r\n  \"coinAmount\": 7\r\n}\r\n\r\n\r\n",
+					"raw": "{\r\n  \"waterConsumption\": 10.66,\r\n  \"detergentConsumption\": 4.92,\r\n  \"waxConsumption\": 2.61,\r\n  \"coinAmount\": 7\r\n}\r\n\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -140,7 +141,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/station/2/unit/9/wash-cycle",
+					"raw": "localhost:8080/api/station/1/unit/2/wash-cycle",
 					"host": [
 						"localhost"
 					],
@@ -148,9 +149,9 @@
 					"path": [
 						"api",
 						"station",
-						"2",
+						"1",
 						"unit",
-						"9",
+						"2",
 						"wash-cycle"
 					]
 				}
@@ -163,7 +164,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/station/2/unit/9/wash-cycle/7",
+					"raw": "localhost:8080/api/station/1/unit/2/wash-cycle/1",
 					"host": [
 						"localhost"
 					],
@@ -171,11 +172,11 @@
 					"path": [
 						"api",
 						"station",
-						"2",
+						"1",
 						"unit",
-						"9",
+						"2",
 						"wash-cycle",
-						"7"
+						"1"
 					]
 				}
 			},
