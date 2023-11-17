@@ -176,7 +176,31 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/station/1/unit/2/wash-cycle?dateTimeFrom=2022-06-11T21:00:00.000&dateTimeTo=2024-06-11T21:00:00.000",
+					"raw": "localhost:8080/api/station/1/unit/2/wash-cycle/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"1",
+						"unit",
+						"2",
+						"wash-cycle",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get filtered wash cycles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/station/1/unit/2/wash-cycle?dateTimeFrom=2022-06-11T21:00:00.000&dateTimeTo=2024-06-11T22:30:00.000",
 					"host": [
 						"localhost"
 					],
@@ -196,40 +220,7 @@
 						},
 						{
 							"key": "dateTimeTo",
-							"value": "2024-06-11T21:00:00.000"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get filtered wash cycles",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/station/2/unit/9/wash-cycle?dateTimeFrom=2023-06-11T21:00:00.000&dateTimeTo=2023-06-11T22:30:00.000",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"station",
-						"2",
-						"unit",
-						"9",
-						"wash-cycle"
-					],
-					"query": [
-						{
-							"key": "dateTimeFrom",
-							"value": "2023-06-11T21:00:00.000"
-						},
-						{
-							"key": "dateTimeTo",
-							"value": "2023-06-11T22:30:00.000"
+							"value": "2024-06-11T22:30:00.000"
 						}
 					]
 				}

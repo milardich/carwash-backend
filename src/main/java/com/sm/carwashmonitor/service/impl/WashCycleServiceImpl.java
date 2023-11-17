@@ -72,7 +72,6 @@ public class WashCycleServiceImpl implements WashCycleService {
         WashCycleResponseDto washCycleResponseDto = washCycleMapper.toDto(washCycle.get());
         washCycleResponseDto.setWashCycleDate(washCycle.get().getWashCycleDate().toString());
         washCycleResponseDto.setStationId(stationId);
-        //washCycleResponseDto.setUnitId(washCycle.get().getUnit().getUnitId());
         return washCycleResponseDto;
     }
 
