@@ -297,7 +297,7 @@
 # Get wash cycle
 ###### Fetch wash cycle by id
 - method: `GET`
-- endpoint: `/api/station/{stationId}/unit/{unitId}/wash-cycle{washCycleId}`
+- endpoint: `/api/station/{stationId}/unit/{unitId}/wash-cycle/{washCycleId}`
 ##### Request body: `EMPTY`
 ##### Response body:
 ```json
@@ -321,10 +321,10 @@
 # Get unit's wash cycles
 ###### Fetches unit's wash cycles filtered by datetime
 - method: `GET`
-- endpoint: `/api/station/{stationId}/unit/{unitId}/wash-cycle`
+- endpoint: `/api/station/1/unit/2/wash-cycle?dateTimeFrom={dateTimeFrom}&dateTimeTo={dateTimeTo}`
 - request params:
-    - `dateTimeFrom`, example: *2023-06-11T21:00:00.000*, **(NOT REQUIRED)**
-    - `dateTimeTo`, example: *2023-06-23T22:30:00.000*, **(NOT REQUIRED)**
+    - `dateTimeFrom`, example: *2022-06-11T21:00:00.000*, **(REQUIRED)**
+    - `dateTimeTo`, example: *2023-06-23T22:30:00.000*, **(REQUIRED)**
 ##### Request body: `EMPTY`
 ##### Response body:
 ```json

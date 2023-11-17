@@ -39,8 +39,8 @@ public class WashCycleController {
     public List<WashCycleResponseDto> getFilteredWashCycles(
             @PathVariable(name = "stationId") Long stationId,
             @PathVariable(name = "unitId") Long unitId,
-            @RequestParam(name = "dateTimeFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeFrom,
-            @RequestParam(name = "dateTimeTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeTo
+            @RequestParam(name = "dateTimeFrom", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeFrom,
+            @RequestParam(name = "dateTimeTo", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeTo
     ) {
         return washCycleService.getFilteredWashCycles(stationId, unitId, dateTimeFrom, dateTimeTo);
     }

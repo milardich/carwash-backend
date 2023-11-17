@@ -30,7 +30,7 @@ CREATE TABLE unit (
 CREATE TABLE wash_cycle (
 	wash_cycle_id INTEGER PRIMARY KEY,
 	unit_id INTEGER,
-	wash_cycle_date DATE,
+	wash_cycle_date TIMESTAMP,
 	water_consumption FLOAT,
 	detergent_consumption FLOAT,
 	wax_consumption FLOAT,

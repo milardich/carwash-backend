@@ -133,7 +133,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"waterConsumption\": 10.66,\r\n  \"detergentConsumption\": 4.92,\r\n  \"waxConsumption\": 2.61,\r\n  \"coinAmount\": 7\r\n}\r\n\r\n\r\n",
+					"raw": "{\r\n  \"waterConsumption\": 6.66,\r\n  \"detergentConsumption\": 88.92,\r\n  \"waxConsumption\": 2.61,\r\n  \"coinAmount\": 3\r\n}\r\n\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -160,11 +160,23 @@
 		},
 		{
 			"name": "Get wash cycle",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "example url:\r\nlocalhost:8080/api/station/1/unit/2/wash-cycle?dateTimeFrom=2022-06-11T21:00:00.000&dateTimeTo=2024-06-11T21:00:00.000",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:8080/api/station/1/unit/2/wash-cycle/1",
+					"raw": "localhost:8080/api/station/1/unit/2/wash-cycle?dateTimeFrom=2022-06-11T21:00:00.000&dateTimeTo=2024-06-11T21:00:00.000",
 					"host": [
 						"localhost"
 					],
@@ -175,8 +187,17 @@
 						"1",
 						"unit",
 						"2",
-						"wash-cycle",
-						"1"
+						"wash-cycle"
+					],
+					"query": [
+						{
+							"key": "dateTimeFrom",
+							"value": "2022-06-11T21:00:00.000"
+						},
+						{
+							"key": "dateTimeTo",
+							"value": "2024-06-11T21:00:00.000"
+						}
 					]
 				}
 			},
