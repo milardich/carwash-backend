@@ -18,8 +18,8 @@ public class ResourceController {
     @GetMapping("/station/{stationId}/resource-consumption")
     public ResourcesUsageResponseDto getStationResourceConsumption(
             @PathVariable(name = "stationId") Long stationId,
-            @RequestParam(name = "dateTimeFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeFrom,
-            @RequestParam(name = "dateTimeTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeTo
+            @RequestParam(name = "dateTimeFrom", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeFrom,
+            @RequestParam(name = "dateTimeTo", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeTo
     ) {
         return resourceService.getStationResourcesUsage(stationId, dateTimeFrom, dateTimeTo);
     }
