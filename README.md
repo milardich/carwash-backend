@@ -210,7 +210,7 @@
 
 
 
-# ***❓ TODO:*** Get unit's data
+# Get unit's data
 ###### Fetches unit's data filtered by datetime
 - method: `GET`
 - endpoint: `/api/station/{stationId}/unit/{unitId}`
@@ -223,7 +223,6 @@
 {
     "unitId": 5,
     "status": "IN_USE",
-    "numberOfWashes": 46,
     "coinTrayAmount": 259,
     "totalWaterConsumption": 4483.21,
     "totalDetergentConsumption": 674.11,
