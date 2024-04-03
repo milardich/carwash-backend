@@ -27,4 +27,11 @@ public class UnitController {
     ) {
         return unitService.updateUnitStatus(stationId, unitId, unitStatusDto);
     }
+
+    @GetMapping("/{unitId}")
+    public UnitDto getUnit(@PathVariable(name = "stationId") Long stationId,
+                           @PathVariable(name = "unitId") Long unitId
+    ) {
+        return unitService.getUnit(stationId, unitId);
+    }
 }

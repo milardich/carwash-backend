@@ -14,7 +14,6 @@ import com.sm.carwashmonitor.service.UnitService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.util.EnumUtils;
 
 import java.util.Optional;
 
@@ -59,6 +58,20 @@ public class UnitServiceImpl implements UnitService {
         unit.get().setStatus(unitStatusDto.getStatus());
         unitRepository.save(unit.get());
         return unitMapper.toDto(unit.get());
+    }
+
+    @Override
+    public UnitDto getUnit(Long stationId, Long unitId) {
+        Optional<Unit> unitOptional = unitRepository.findById(unitId);
+
+        Unit unit = null;
+        if (unitOptional.isPresent()) {
+            unit = unitOptional.get();
+        }
+        else {
+            throw new EntityNotFoundException("Unit not found!");
+        }
+        return unitMapper.toDto(unit);
     }
 
     private void setDefaultUnitValues(Unit unit) {

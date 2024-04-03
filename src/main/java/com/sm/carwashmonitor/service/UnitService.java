@@ -8,4 +8,5 @@ import com.sm.carwashmonitor.model.enumeration.UnitStatus;
 public interface UnitService {
     StationResponseDto createUnit(Long stationId);
     UnitDto updateUnitStatus(Long stationId, Long unitId, UnitStatusDto unitStatusDto);
+    UnitDto getUnit(Long stationId, Long unitId);
 }
