@@ -13,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +34,8 @@ public class ResourceServiceImpl implements ResourceService {
         units.forEach(unit -> {
             washCycles.addAll(washCycleRepository.getFilteredWashCyclesByUnitId(unit.getUnitId(), dateTimeFrom, dateTimeTo));
         });
+
+        washCycles.sort(Comparator.comparing(WashCycle::getWashCycleDate));
 
         ResourcesUsageResponseDto resourcesUsageResponseDto = new ResourcesUsageResponseDto();
         fillResourcesUsageResponseDto(resourcesUsageResponseDto, washCycles);
