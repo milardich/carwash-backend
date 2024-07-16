@@ -1,0 +1,10 @@
+name: "carwash_db"
+services:
+  postgres:
+    image: postgres:16.3
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "qwer"
+      POSTGRES_DB: "carwash_db"

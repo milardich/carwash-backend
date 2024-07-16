@@ -1,10 +1,8 @@
 spring:
-  config:
-    import: env.properties
-  datasource:
-    username: ${DB_USER}
-    url: ${DB_URL}
-    password: ${DB_PASSWORD}
-  jpa:
-    hibernate:
-      ddl-auto: none
+  application:
+    name: "CarWash Monitor"
+  profiles:
+    active: "dev"
+#logging:
+#  level:
+#    root: DEBUG

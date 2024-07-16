@@ -1,12 +1,12 @@
--- db name: carwash_monitor
+-- db name: carwash_db
 
-DROP TABLE IF EXISTS station;
-DROP TABLE IF EXISTS unit;
-DROP TABLE IF EXISTS wash_cycle;
-DROP SEQUENCE IF EXISTS station_sequence;
-DROP SEQUENCE IF EXISTS unit_sequence;
-DROP SEQUENCE IF EXISTS wash_cycle_sequence;
-
+--DROP DATABASE IF EXISTS carwash_db
+--DROP TABLE IF EXISTS station;
+--DROP TABLE IF EXISTS unit;
+--DROP TABLE IF EXISTS wash_cycle;
+--DROP SEQUENCE IF EXISTS station_sequence;
+--DROP SEQUENCE IF EXISTS unit_sequence;
+--DROP SEQUENCE IF EXISTS wash_cycle_sequence;
 
 CREATE TABLE station (
 	station_id INTEGER PRIMARY KEY,

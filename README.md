@@ -1,8 +1,45 @@
-# CarWash Monitor API documentation
+# CarWash Monitor
 
 ---
 
+## About
+- REST API for monitoring Car Wash stations
 
+## Setup
+- ### Database setup
+  - run `docker-compose up` from the root directory of this project
+  - run `init_db.cmd`
+---
+- ### Dev setup
+  - ### Requirements
+    - Java 17
+    - Maven
+    - PostgreSQL
+  - ### Windows development
+    - Run `windows_setup.cmd`
+  - ### Linux / MacOS development
+    - Run `linux_macos_setup.sh`
+
+## Test request
+- method: `GET`
+- endpoint: `localhost:8080/api/station`
+##### Response body:
+```json
+[
+  {
+    "stationId": 1,
+    "stationName": "ExampleName",
+    "city": "Example City",
+    "streetName": "Example street name",
+    "streetNumber": "15",
+    "country": "Croatia",
+    "units": []
+  }
+]
+```
+##### Response status: `200 OK`
+
+---
 
  # Create new station
  ###### Creates a new car wash station.

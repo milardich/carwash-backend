@@ -1,0 +1,10 @@
+environment:
+  name: "prod"
+spring:
+  datasource:
+    username: ""
+    url: ""
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: none
