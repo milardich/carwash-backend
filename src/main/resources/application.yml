@@ -3,6 +3,8 @@ spring:
     name: "CarWash Monitor"
   profiles:
     active: "dev"
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 #logging:
 #  level:
 #    root: DEBUG

@@ -5,6 +5,3 @@ spring:
     username: ""
     url: ""
     password: ""
-  jpa:
-    hibernate:
-      ddl-auto: none
