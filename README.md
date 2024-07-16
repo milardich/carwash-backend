@@ -8,17 +8,9 @@
 ## Setup
 - ### Database setup
   - run `docker-compose up` from the root directory of this project
-  - run `init_db.cmd`
+  - run `init_db.cmd` *(windows)* **OR** `init_db.sh` *(unix)* 
+
 ---
-- ### Dev setup
-  - ### Requirements
-    - Java 17
-    - Maven
-    - PostgreSQL
-  - ### Windows development
-    - Run `windows_setup.cmd`
-  - ### Linux / MacOS development
-    - Run `linux_macos_setup.sh`
 
 ## Test request
 - method: `GET`
@@ -38,6 +30,14 @@
 ]
 ```
 ##### Response status: `200 OK`
+
+---
+
+- ### Dev setup
+  - ### Requirements
+    - Java 17
+    - Maven
+    - PostgreSQL
 
 ---
 
