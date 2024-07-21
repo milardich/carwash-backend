@@ -2,7 +2,6 @@ package com.sm.carwashmonitor.validation;
 
 import com.sm.carwashmonitor.dto.StationRequestDto;
 import com.sm.carwashmonitor.exception.GenericValidationException;
-import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.repository.StationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,7 @@ import java.util.List;
 public class StationValidation {
     private final StationRepository stationRepository;
 
-    private List<String> stationProperties = List.of(
+    private final List<String> stationProperties = List.of(
         "Station",
         "City",
         "Street",
@@ -32,13 +31,7 @@ public class StationValidation {
 
     public void exists(Long id) {
         if(!stationRepository.existsById(id)) {
-            throw new EntityNotFoundException("Station with id " + id + " does not exist");
-        }
-    }
-
-    public void isEmpty(List<Station> stations) {
-        if(stations.isEmpty()) {
-            throw new EntityNotFoundException("Failed to load stations");
+            throw new EntityNotFoundException("Station does not exist");
         }
     }
 }

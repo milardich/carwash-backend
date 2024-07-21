@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,15 +32,13 @@ public class StationServiceImpl implements StationService {
     @Override
     public StationResponseDto getStation(Long stationId) {
         stationValidation.exists(stationId);
-        Optional<Station> optionalStation = stationRepository.findById(stationId);
-        Station station = optionalStation.orElseThrow();
+        Station station = stationRepository.getReferenceById(stationId);
         return stationMapper.toDto(station);
     }
 
     @Override
     public List<StationResponseDto> getAllStations() {
         List<Station> stations = stationRepository.findAll();
-        stationValidation.isEmpty(stations);
         return toResponseDtos(stations);
     }
 
