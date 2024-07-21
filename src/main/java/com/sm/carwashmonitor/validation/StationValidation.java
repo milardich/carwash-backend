@@ -7,9 +7,6 @@ import com.sm.carwashmonitor.repository.StationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -33,15 +30,15 @@ public class StationValidation {
         });
     }
 
-    public void existsById(Long id) {
+    public void exists(Long id) {
         if(!stationRepository.existsById(id)) {
             throw new EntityNotFoundException("Station with id " + id + " does not exist");
         }
     }
 
-    public void exists(List<Station> stations) {
+    public void isEmpty(List<Station> stations) {
         if(stations.isEmpty()) {
-            throw new EntityNotFoundException("Failed to load all stations");
+            throw new EntityNotFoundException("Failed to load stations");
         }
     }
 }

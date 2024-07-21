@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,6 +22,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDetails> handleGenericValidationException(GenericValidationException genericValidationException){
         ErrorDetails errorDetails = prepareErrorDetails(genericValidationException);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = NoSuchElementException.class)
+    public ResponseEntity<ErrorDetails> handleNoSuchElementException(NoSuchElementException noSuchElementException) {
+        ErrorDetails errorDetails = prepareErrorDetails(noSuchElementException);
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
     public ErrorDetails prepareErrorDetails(Exception exception){

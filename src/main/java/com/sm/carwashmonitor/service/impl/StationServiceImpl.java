@@ -32,15 +32,16 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public StationResponseDto getStation(Long stationId) {
-        Optional<Station> station = stationRepository.findById(stationId);
-        stationValidation.existsById(stationId);
-        return stationMapper.toDto(station.get());
+        stationValidation.exists(stationId);
+        Optional<Station> optionalStation = stationRepository.findById(stationId);
+        Station station = optionalStation.orElseThrow();
+        return stationMapper.toDto(station);
     }
 
     @Override
     public List<StationResponseDto> getAllStations() {
         List<Station> stations = stationRepository.findAll();
-        stationValidation.exists(stations);
+        stationValidation.isEmpty(stations);
         return toResponseDtos(stations);
     }
 
