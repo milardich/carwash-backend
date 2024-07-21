@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sm.carwashmonitor.dto.StationRequestDto;
 import com.sm.carwashmonitor.dto.StationResponseDto;
 import com.sm.carwashmonitor.service.StationService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -47,6 +48,23 @@ public class StationControllerTests {
     }
 
     @Test
+    void createInvalidStation() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        StationResponseDto stationResponseDto = new StationResponseDto();
+        StationRequestDto stationRequestDto = new StationRequestDto();
+        fillStationRequestDto(stationRequestDto);
+
+        Mockito.when(stationService.createStation(stationRequestDto)).thenReturn(stationResponseDto);
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/api/station")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(stationRequestDto))
+        )
+        .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
     void getStationByIdReturn200() throws Exception {
         StationResponseDto stationResponseDto = new StationResponseDto();
 
@@ -57,6 +75,18 @@ public class StationControllerTests {
             .accept(MediaType.APPLICATION_JSON)
         )
         .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    void getStationByIdReturn404() throws Exception {
+
+        Mockito.when(stationService.getStation(9999L)).thenThrow(new EntityNotFoundException("Station not found."));
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/station/9999")
+            .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test

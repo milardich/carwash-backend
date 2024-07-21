@@ -6,25 +6,25 @@ import com.sm.carwashmonitor.repository.StationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import java.util.List;
+import java.util.HashMap;
+
 
 @Component
 @RequiredArgsConstructor
 public class StationValidation {
     private final StationRepository stationRepository;
 
-    private final List<String> stationProperties = List.of(
-        "Station",
-        "City",
-        "Street",
-        "Street number",
-        "Country"
-    );
-
     public void validate(StationRequestDto stationRequestDto) {
-        stationProperties.forEach(stationProperty -> {
-            if(stationProperty.isEmpty()) {
-                throw new GenericValidationException(stationProperty + " property is empty.");
+        HashMap<String, String> stationProperties = new HashMap<>();
+        stationProperties.put("Station", stationRequestDto.getStationName());
+        stationProperties.put("City", stationRequestDto.getCity());
+        stationProperties.put("Street", stationRequestDto.getStreetName());
+        stationProperties.put("Street number", stationRequestDto.getStreetNumber());
+        stationProperties.put("Country", stationRequestDto.getCountry());
+
+        stationProperties.keySet().forEach(key -> {
+            if(stationProperties.get(key).isEmpty()) {
+                throw new GenericValidationException(key + " property is empty.");
             }
         });
     }
