@@ -24,8 +24,8 @@ public class StationServiceImpl implements StationService {
     public StationResponseDto createStation(StationRequestDto stationRequestDto) {
         stationValidation.validate(stationRequestDto);
         Station station = stationMapper.toEntity(stationRequestDto);
-        stationRepository.save(station);
-        return stationMapper.toDto(station);
+        Station savedStation = stationRepository.save(station);
+        return stationMapper.toDto(savedStation);
     }
 
     @Override

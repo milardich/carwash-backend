@@ -30,54 +30,63 @@ public class StationServiceTests {
     @InjectMocks
     private StationServiceImpl stationService;
 
+    // test objects
+    private StationRequestDto stationRequestDto;
+    private StationResponseDto stationResponseDto;
+    private Station station;
+    private String testString;
+    private Long testLong;
+
     @BeforeEach
     public void init() {
-        MockitoAnnotations.openMocks(this);
+        this.stationRequestDto = new StationRequestDto();
+        this.stationResponseDto = new StationResponseDto();
+        this.station = new Station();
+        fillStationRequestDTO(this.stationRequestDto);
+        fillStationResponseDto(this.stationResponseDto);
+        fillStation(this.station);
+        this.testString = "test";
+        this.testLong = 55L;
     }
 
     @Test
     void testCreateStationReturnStationDTO() throws Exception {
-        StationRequestDto stationRequestDto = fillStationDTO();
-        StationResponseDto expected = fillStationResponseDto();
-        Station station = fillStation();
+        Mockito.doNothing().when(stationValidation).validate(Mockito.any());
+        Mockito.when(stationMapper.toEntity(Mockito.any())).thenReturn(this.station);
+        Mockito.when(stationRepository.save(Mockito.any())).thenReturn(this.station);
+        Mockito.doReturn(stationResponseDto).when(stationMapper).toDto(Mockito.any());
 
-//        Mockito.doNothing().when(stationValidation).validate(Mockito.any(StationRequestDto.class));
-        Mockito.when(stationMapper.toEntity(Mockito.any(StationRequestDto.class))).thenReturn(station);
-//        Mockito.when(stationRepository.save(Mockito.any(Station.class))).thenReturn(station);
-        Mockito.when(stationMapper.toDto(Mockito.any(Station.class))).thenReturn(expected);
+        StationResponseDto actualResponse = stationService.createStation(stationRequestDto);
 
-        StationResponseDto actual = stationService.createStation(stationRequestDto);
-
-        Assertions.assertEquals(expected.getCity(), actual.getCity());
+        Assertions.assertEquals(stationResponseDto.getCity(), actualResponse.getCity());
+        Mockito.verify(stationRepository).save(Mockito.any(Station.class));
     }
 
-    private StationRequestDto fillStationDTO() {
-        StationRequestDto stationRequestDto = new StationRequestDto();
-        stationRequestDto.setStationName("TestName");
-        stationRequestDto.setCountry("testCountry");
-        stationRequestDto.setCity("asd");
-        stationRequestDto.setStreetName("asdads");
-        stationRequestDto.setStreetNumber("12A");
-        return stationRequestDto;
+    private void fillStationRequestDTO(StationRequestDto stationRequestDto) {
+        stationRequestDto.setStationName(this.testString);
+        stationRequestDto.setCountry(this.testString);
+        stationRequestDto.setCity(this.testString);
+        stationRequestDto.setStreetName(this.testString);
+        stationRequestDto.setStreetNumber(this.testString);
     }
 
-    private StationResponseDto fillStationResponseDto() {
-        StationResponseDto stationResponseDto = new StationResponseDto();
-        stationResponseDto.setStationName("TestName");
-        stationResponseDto.setCountry("testCountry");
-        stationResponseDto.setCity("asd");
-        stationResponseDto.setStreetName("asdads");
-        stationResponseDto.setStreetNumber("12A");
-        return stationResponseDto;
+    private void fillStationResponseDto(StationResponseDto stationResponseDto) {
+        stationResponseDto.setStationId(this.testLong);
+        stationResponseDto.setStationName(this.testString);
+        stationResponseDto.setCountry(this.testString);
+        stationResponseDto.setCity(this.testString);
+        stationResponseDto.setStreetName(this.testString);
+        stationResponseDto.setStreetNumber(this.testString);
+        stationResponseDto.setUnits(null);
     }
 
-    private Station fillStation() {
-        Station station = new Station();
-        station.setStationName("TestName");
-        station.setCountry("testCountry");
-        station.setCity("asd");
-        station.setStreetName("asdads");
-        station.setStreetNumber("12A");
-        return station;
+    private void fillStation(Station station) {
+        station.setStationId(this.testLong);
+        station.setStationName(this.testString);
+        station.setCountry(this.testString);
+        station.setCity(this.testString);
+        station.setStreetName(this.testString);
+        station.setStreetNumber(this.testString);
+        station.setUnits(null);
     }
 }

@@ -2,6 +2,7 @@ package com.sm.carwashmonitor.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Table(name = "station")
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Station {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "station_sequence")
