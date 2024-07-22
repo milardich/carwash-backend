@@ -25,14 +25,12 @@ public class StationServiceImpl implements StationService {
         stationValidation.validate(stationRequestDto);
         Station station = stationMapper.toEntity(stationRequestDto);
         stationRepository.save(station);
-        station.setUnits(new ArrayList<>());
         return stationMapper.toDto(station);
     }
 
     @Override
     public StationResponseDto getStation(Long stationId) {
-        stationValidation.exists(stationId);
-        Station station = stationRepository.getReferenceById(stationId);
+        Station station = stationRepository.findById(stationId).orElseThrow();
         return stationMapper.toDto(station);
     }
 

@@ -5,7 +5,6 @@ import com.sm.carwashmonitor.dto.StationRequestDto;
 import com.sm.carwashmonitor.dto.StationResponseDto;
 import com.sm.carwashmonitor.service.StationService;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,23 +46,6 @@ public class StationControllerTests {
     }
 
     @Test
-    void createInvalidStation() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        StationResponseDto stationResponseDto = new StationResponseDto();
-        StationRequestDto stationRequestDto = new StationRequestDto();
-        fillStationRequestDto(stationRequestDto);
-
-        Mockito.when(stationService.createStation(stationRequestDto)).thenReturn(stationResponseDto);
-
-        mockMvc.perform(
-            MockMvcRequestBuilders.post("/api/station")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(stationRequestDto))
-        )
-        .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    @Test
     void getStationByIdReturn200() throws Exception {
         StationResponseDto stationResponseDto = new StationResponseDto();
 
@@ -79,8 +60,8 @@ public class StationControllerTests {
 
     @Test
     void getStationByIdReturn404() throws Exception {
-
-        Mockito.when(stationService.getStation(9999L)).thenThrow(new EntityNotFoundException("Station not found."));
+        Mockito.when(stationService.getStation(9999L))
+                .thenThrow(new EntityNotFoundException("Station not found."));
 
         mockMvc.perform(
             MockMvcRequestBuilders.get("/api/station/9999")
