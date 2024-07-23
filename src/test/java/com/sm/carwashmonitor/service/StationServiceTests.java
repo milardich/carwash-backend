@@ -2,6 +2,7 @@ package com.sm.carwashmonitor.service;
 
 import com.sm.carwashmonitor.dto.StationRequestDto;
 import com.sm.carwashmonitor.dto.StationResponseDto;
+import com.sm.carwashmonitor.exception.GenericValidationException;
 import com.sm.carwashmonitor.mapper.StationMapper;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.repository.StationRepository;
@@ -13,6 +14,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -34,8 +40,8 @@ public class StationServiceTests {
     private StationRequestDto stationRequestDto;
     private StationResponseDto stationResponseDto;
     private Station station;
-    private String testString;
-    private Long testLong;
+    private final String testString = "test";
+    private final Long testLong = 55L;
 
     @BeforeEach
     public void init() {
@@ -45,8 +51,6 @@ public class StationServiceTests {
         fillStationRequestDTO(this.stationRequestDto);
         fillStationResponseDto(this.stationResponseDto);
         fillStation(this.station);
-        this.testString = "test";
-        this.testLong = 55L;
     }
 
     @Test
@@ -60,6 +64,66 @@ public class StationServiceTests {
 
         Assertions.assertEquals(stationResponseDto.getCity(), actualResponse.getCity());
         Mockito.verify(stationRepository).save(Mockito.any(Station.class));
+    }
+
+    @Test
+    void testCreateInvalidStationThrowException() throws Exception {
+        stationRequestDto.setStationName("");
+
+        Mockito.doThrow(new GenericValidationException("Validation failed"))
+                .when(stationValidation).validate(stationRequestDto);
+
+        GenericValidationException thrownException = Assertions.assertThrows(
+            GenericValidationException.class,
+                () -> stationService.createStation(stationRequestDto)
+        );
+
+        Assertions.assertEquals("Validation failed", thrownException.getMessage());
+    }
+
+    @Test
+    void testGetStationReturnStationResponseDTO() throws Exception {
+        Mockito.when(stationRepository.findById(Mockito.any())).thenReturn(Optional.of(this.station));
+        Mockito.when(stationMapper.toDto(Mockito.any())).thenReturn(this.stationResponseDto);
+
+        StationResponseDto actualResponse = stationService.getStation(this.testLong);
+
+        Assertions.assertEquals(this.testLong, actualResponse.getStationId());
+    }
+
+    @Test
+    void testGetStationThrowException() throws Exception {
+        Mockito.when(stationRepository.findById(Mockito.any())).thenThrow(new NoSuchElementException("No such element"));
+
+        NoSuchElementException thrownException = Assertions.assertThrows(
+            NoSuchElementException.class,
+                () -> stationRepository.findById(Mockito.any())
+        );
+
+        Assertions.assertEquals("No such element", thrownException.getMessage());
+    }
+
+    @Test
+    void testGetAllStationsReturnListOfStationResponseDTOs() throws Exception {
+        List<Station> stations = new ArrayList<>();
+        Station station1 = this.station;
+        Station station2 = this.station;
+        stations.add(station1);
+        stations.add(station2);
+
+        List<StationResponseDto> stationResponseDtos = new ArrayList<>();
+        StationResponseDto stationResponseDto1 = this.stationResponseDto;
+        StationResponseDto stationResponseDto2 = this.stationResponseDto;
+        stationResponseDtos.add(stationResponseDto1);
+        stationResponseDtos.add(stationResponseDto2);
+
+        Mockito.when(stationRepository.findAll()).thenReturn(stations);
+        Mockito.when(stationMapper.toDto(stations.get(0))).thenReturn(stationResponseDtos.get(0));
+        Mockito.when(stationMapper.toDto(stations.get(1))).thenReturn(stationResponseDtos.get(1));
+
+        List<StationResponseDto> actualResponse = stationService.getAllStations();
+
+        Assertions.assertEquals(stationResponseDtos.get(1), actualResponse.get(1));
     }
 
     private void fillStationRequestDTO(StationRequestDto stationRequestDto) {
