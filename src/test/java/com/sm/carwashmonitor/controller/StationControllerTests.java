@@ -3,6 +3,7 @@ package com.sm.carwashmonitor.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sm.carwashmonitor.dto.StationRequestDto;
 import com.sm.carwashmonitor.dto.StationResponseDto;
+import com.sm.carwashmonitor.exception.GenericValidationException;
 import com.sm.carwashmonitor.service.StationService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -43,6 +45,23 @@ public class StationControllerTests {
             .content(objectMapper.writeValueAsString(stationRequestDto))
         )
         .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    void createStationReturn404() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        StationRequestDto stationRequestDto = new StationRequestDto();
+        fillStationRequestDto(stationRequestDto);
+        stationRequestDto.setStationName("");
+
+        Mockito.when(stationService.createStation(stationRequestDto)).thenReturn(new StationResponseDto());
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/api/statioTEST")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(stationRequestDto))
+        )
+        .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
