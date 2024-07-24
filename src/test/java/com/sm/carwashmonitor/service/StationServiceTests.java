@@ -93,14 +93,14 @@ public class StationServiceTests {
 
     @Test
     void testGetStationThrowException() throws Exception {
-        Mockito.when(stationRepository.findById(Mockito.any())).thenThrow(new NoSuchElementException("No such element"));
+        Mockito.when(stationRepository.findById(Mockito.any())).thenReturn(Optional.empty());
 
         NoSuchElementException thrownException = Assertions.assertThrows(
             NoSuchElementException.class,
-                () -> stationRepository.findById(Mockito.any())
+            () -> stationService.getStation(Mockito.any())
         );
 
-        Assertions.assertEquals("No such element", thrownException.getMessage());
+        Assertions.assertEquals("No value present", thrownException.getMessage());
     }
 
     @Test
