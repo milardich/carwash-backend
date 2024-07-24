@@ -29,14 +29,12 @@ public class UnitServiceImpl implements UnitService {
     @Override
     public StationResponseDto createUnit(Long stationId) {
         Unit unit = new Unit();
-        Optional<Station> station = stationRepository.findById(stationId);
-        if(station.isEmpty()) {
-            throw new EntityNotFoundException("Station not found");
-        }
-        unit.setStation(station.get());
+        Optional<Station> optionalStation = stationRepository.findById(stationId);
+        Station station = optionalStation.orElseThrow();
+        unit.setStation(station);
         setDefaultUnitValues(unit);
         unitRepository.save(unit);
-        return stationMapper.toDto(station.get());
+        return stationMapper.toDto(station);
     }
 
     @Override
