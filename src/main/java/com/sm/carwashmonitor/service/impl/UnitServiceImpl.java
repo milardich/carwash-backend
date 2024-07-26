@@ -11,11 +11,12 @@ import com.sm.carwashmonitor.model.enumeration.UnitStatus;
 import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.repository.UnitRepository;
 import com.sm.carwashmonitor.service.UnitService;
+import com.sm.carwashmonitor.validation.StationValidation;
+import com.sm.carwashmonitor.validation.UnitValidation;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,12 +26,14 @@ public class UnitServiceImpl implements UnitService {
     private final StationRepository stationRepository;
     private final StationMapper stationMapper;
     private final UnitMapper unitMapper;
+    private final UnitValidation unitValidation;
+    private final StationValidation stationValidation;
 
     @Override
     public StationResponseDto createUnit(Long stationId) {
         Unit unit = new Unit();
-        Optional<Station> optionalStation = stationRepository.findById(stationId);
-        Station station = optionalStation.orElseThrow();
+        Station station = stationRepository.findById(stationId).orElseThrow(()
+                -> new EntityNotFoundException("Station not found"));
         unit.setStation(station);
         setDefaultUnitValues(unit);
         unitRepository.save(unit);
@@ -39,36 +42,25 @@ public class UnitServiceImpl implements UnitService {
 
     @Override
     public UnitDto updateUnitStatus(Long stationId, Long unitId, UnitStatusDto unitStatusDto) {
-        Optional<Station> station = stationRepository.findById(stationId);
-        if(station.isEmpty()) {
-            throw new EntityNotFoundException("Station not found");
-        }
-        Optional<Unit> unit = unitRepository.findById(unitId);
-        if(unit.isEmpty()) {
-            throw new EntityNotFoundException("Unit not found");
-        }
-        if(!station.get().getUnits().contains(unit.get())) {
-            throw new EntityNotFoundException("Station " + stationId + "does not contain unit " + unitId);
-        }
-        if(!unitStatusExists(unitStatusDto.getStatus())) {
-            throw new EntityNotFoundException("Status of type '" + unitStatusDto.getStatus() + "' does not exist");
-        }
-        unit.get().setStatus(unitStatusDto.getStatus());
-        unitRepository.save(unit.get());
-        return unitMapper.toDto(unit.get());
+        Station station = stationRepository.findById(stationId).orElseThrow(
+                () -> new EntityNotFoundException("Station not found"));
+
+        Unit unit = unitRepository.findById(unitId).orElseThrow(
+                () -> new EntityNotFoundException("Unit not found"));
+
+        stationValidation.validateStationContainsUnit(station, unit);
+        unitValidation.validateUnitStatus(unitStatusDto.getStatus());
+        unit.setStatus(unitStatusDto.getStatus());
+        unitRepository.save(unit);
+
+        return unitMapper.toDto(unit);
     }
 
     @Override
     public UnitDto getUnit(Long stationId, Long unitId) {
-        Optional<Unit> unitOptional = unitRepository.findById(unitId);
+        Unit unit = unitRepository.findById(unitId).orElseThrow(
+                () -> new EntityNotFoundException("Unit not found"));
 
-        Unit unit = null;
-        if (unitOptional.isPresent()) {
-            unit = unitOptional.get();
-        }
-        else {
-            throw new EntityNotFoundException("Unit not found!");
-        }
         return unitMapper.toDto(unit);
     }
 
@@ -78,14 +70,5 @@ public class UnitServiceImpl implements UnitService {
         unit.setTotalWaterConsumption(0.00F);
         unit.setTotalDetergentConsumption(0.00F);
         unit.setTotalWaxConsumption(0.00F);
-    }
-
-    private boolean unitStatusExists(String unitStatus){
-        for (UnitStatus status : UnitStatus.values()) {
-            if (status.name().equals(unitStatus)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
