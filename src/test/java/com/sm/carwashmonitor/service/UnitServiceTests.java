@@ -9,6 +9,7 @@ import com.sm.carwashmonitor.model.enumeration.UnitStatus;
 import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.repository.UnitRepository;
 import com.sm.carwashmonitor.service.impl.UnitServiceImpl;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -95,11 +96,11 @@ public class UnitServiceTests {
         Optional<Station> emptyOptionalStation = Optional.empty();
         Mockito.when(stationRepository.findById(Mockito.any())).thenReturn(emptyOptionalStation);
 
-        NoSuchElementException thrownException = Assertions.assertThrows(
-                NoSuchElementException.class,
+        EntityNotFoundException thrownException = Assertions.assertThrows(
+                EntityNotFoundException.class,
                 () -> unitService.createUnit(55L)
         );
 
-        Assertions.assertEquals("No value present", thrownException.getMessage());
+        Assertions.assertEquals("Station not found", thrownException.getMessage());
     }
 }
