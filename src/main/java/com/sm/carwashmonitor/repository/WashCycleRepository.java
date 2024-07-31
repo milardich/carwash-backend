@@ -1,6 +1,5 @@
 package com.sm.carwashmonitor.repository;
 
-import com.sm.carwashmonitor.dto.GroupedResourceUsageProjection;
 import com.sm.carwashmonitor.model.WashCycle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,5 +26,5 @@ public interface WashCycleRepository extends JpaRepository<WashCycle, Long> {
         "ORDER BY wc.wash_cycle_date\\:\\:date",
         nativeQuery = true
     )
-    List<GroupedResourceUsageProjection> getGroupedResourcesUsage();
+    List<Object[]> getGroupedResourcesUsage();
 }

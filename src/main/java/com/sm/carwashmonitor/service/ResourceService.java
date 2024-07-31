@@ -1,6 +1,6 @@
 package com.sm.carwashmonitor.service;
 
-import com.sm.carwashmonitor.dto.GroupedResourceUsageProjection;
+import com.sm.carwashmonitor.dto.GroupedResourceUsageDTO;
 import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
 
 import java.time.LocalDateTime;
@@ -13,5 +13,5 @@ public interface ResourceService {
             LocalDateTime dateTimeTo
     );
 
-    List<GroupedResourceUsageProjection> getGroupedResourcesUsage();
+    List<GroupedResourceUsageDTO> getGroupedResourcesUsage();
 }

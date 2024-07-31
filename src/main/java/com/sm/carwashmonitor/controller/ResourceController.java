@@ -1,6 +1,6 @@
 package com.sm.carwashmonitor.controller;
 
-import com.sm.carwashmonitor.dto.GroupedResourceUsageProjection;
+import com.sm.carwashmonitor.dto.GroupedResourceUsageDTO;
 import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
 import com.sm.carwashmonitor.service.ResourceService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class ResourceController {
     }
 
     @GetMapping("/station/resource-consumption/test")
-    public List<GroupedResourceUsageProjection> getGroupedResourcesUsage() {
+    public List<GroupedResourceUsageDTO> getGroupedResourcesUsage() {
         return resourceService.getGroupedResourcesUsage();
     }
 }

@@ -1,6 +1,6 @@
 package com.sm.carwashmonitor.service.impl;
 
-import com.sm.carwashmonitor.dto.GroupedResourceUsageProjection;
+import com.sm.carwashmonitor.dto.GroupedResourceUsageDTO;
 import com.sm.carwashmonitor.dto.ResourceConsumptionDto;
 import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
 import com.sm.carwashmonitor.model.Station;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,9 +45,17 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public List<GroupedResourceUsageProjection> getGroupedResourcesUsage() {
-        List<GroupedResourceUsageProjection> test = washCycleRepository.getGroupedResourcesUsage();
-        return test;
+    public List<GroupedResourceUsageDTO> getGroupedResourcesUsage() {
+        List<Object[]> results = washCycleRepository.getGroupedResourcesUsage();
+
+        return results.stream()
+            .map(result -> new GroupedResourceUsageDTO(
+                    result[0].toString(),
+                    ((Number) result[1]).floatValue(),
+                    ((Number) result[2]).floatValue(),
+                    ((Number) result[3]).floatValue()
+            ))
+            .collect(Collectors.toList());
     }
 
     private void fillResourcesUsageResponseDto(ResourcesUsageResponseDto resourcesUsageResponseDto, List<WashCycle> washCycles) {
