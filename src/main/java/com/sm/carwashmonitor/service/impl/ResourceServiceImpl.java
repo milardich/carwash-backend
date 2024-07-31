@@ -4,20 +4,18 @@ import com.sm.carwashmonitor.dto.ResourceConsumptionDto;
 import com.sm.carwashmonitor.dto.ResourceUsageRequestDTO;
 import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
 import com.sm.carwashmonitor.dto.TotalResourceUsageDTO;
-import com.sm.carwashmonitor.exception.GenericValidationException;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.model.Unit;
 import com.sm.carwashmonitor.model.WashCycle;
+import com.sm.carwashmonitor.repository.ResourceRepository;
 import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.repository.WashCycleRepository;
 import com.sm.carwashmonitor.service.ResourceService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +23,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     private final WashCycleRepository washCycleRepository;
     private final StationRepository stationRepository;
+    private final ResourceRepository resourceRepository;
 
     @Override
     public ResourcesUsageResponseDto getStationResourcesUsage(Long stationId, LocalDateTime dateTimeFrom, LocalDateTime dateTimeTo) {
@@ -48,32 +47,8 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<TotalResourceUsageDTO> getGroupedResourcesUsage(ResourceUsageRequestDTO resourceUsageRequestDTO) {
-
         String dateTimeRange = resourceUsageRequestDTO.getDateTimeRange();
-
-        List<Object[]> results;
-
-        if(Objects.equals(dateTimeRange, "1 month")) {
-            results = washCycleRepository.getResourcesUsage1Month();
-        }
-        else if (Objects.equals(dateTimeRange, "7 days")) {
-            results = washCycleRepository.getResourcesUsageLast7Days();
-        }
-        else if(Objects.equals(dateTimeRange, "1 year")) {
-            results = washCycleRepository.getResourcesUsageLastYear();
-        }
-        else {
-            throw new GenericValidationException("Invalid range");
-        }
-
-        return results.stream()
-            .map(result -> new TotalResourceUsageDTO(
-                    result[0].toString(),
-                    ((Number) result[1]).floatValue(),
-                    ((Number) result[2]).floatValue(),
-                    ((Number) result[3]).floatValue()
-            ))
-            .collect(Collectors.toList());
+        return resourceRepository.getResourcesUsageByDateTimeRange(dateTimeRange);
     }
 
     private void fillResourcesUsageResponseDto(ResourcesUsageResponseDto resourcesUsageResponseDto, List<WashCycle> washCycles) {
