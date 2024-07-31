@@ -7,7 +7,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class GroupedResourceUsageDTO {
+public class TotalResourceUsageDTO {
     String washCycleDate;
     Float totalWaterConsumption;
     Float totalWaxConsumption;
