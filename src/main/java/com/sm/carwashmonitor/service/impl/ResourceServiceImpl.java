@@ -1,5 +1,6 @@
 package com.sm.carwashmonitor.service.impl;
 
+import com.sm.carwashmonitor.dto.GroupedResourceUsageProjection;
 import com.sm.carwashmonitor.dto.ResourceConsumptionDto;
 import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
 import com.sm.carwashmonitor.model.Station;
@@ -40,6 +41,12 @@ public class ResourceServiceImpl implements ResourceService {
         ResourcesUsageResponseDto resourcesUsageResponseDto = new ResourcesUsageResponseDto();
         fillResourcesUsageResponseDto(resourcesUsageResponseDto, washCycles);
         return resourcesUsageResponseDto;
+    }
+
+    @Override
+    public List<GroupedResourceUsageProjection> getGroupedResourcesUsage() {
+        List<GroupedResourceUsageProjection> test = washCycleRepository.getGroupedResourcesUsage();
+        return test;
     }
 
     private void fillResourcesUsageResponseDto(ResourcesUsageResponseDto resourcesUsageResponseDto, List<WashCycle> washCycles) {
