@@ -1,6 +1,5 @@
 package com.sm.carwashmonitor.service;
 
-import com.sm.carwashmonitor.dto.ResourceUsageRequestDTO;
 import com.sm.carwashmonitor.dto.TotalResourceUsageDTO;
 import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
 
@@ -14,5 +13,5 @@ public interface ResourceService {
             LocalDateTime dateTimeTo
     );
 
-    List<TotalResourceUsageDTO> getGroupedResourcesUsage(ResourceUsageRequestDTO resourceUsageRequestDTO);
+    List<TotalResourceUsageDTO> getGroupedResourcesUsage(Long stationId, String dateTimeRange);
 }

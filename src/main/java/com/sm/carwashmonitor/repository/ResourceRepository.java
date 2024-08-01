@@ -5,5 +5,5 @@ import com.sm.carwashmonitor.dto.TotalResourceUsageDTO;
 import java.util.List;
 
 public interface ResourceRepository {
-    List<TotalResourceUsageDTO> getResourcesUsageByDateTimeRange(String dateTimeRange);
+    List<TotalResourceUsageDTO> getResourcesUsageByDateTimeRange(Long stationId, String dateTimeRange);
 }

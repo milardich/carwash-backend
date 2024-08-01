@@ -1,7 +1,6 @@
 package com.sm.carwashmonitor.service.impl;
 
 import com.sm.carwashmonitor.dto.ResourceConsumptionDto;
-import com.sm.carwashmonitor.dto.ResourceUsageRequestDTO;
 import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
 import com.sm.carwashmonitor.dto.TotalResourceUsageDTO;
 import com.sm.carwashmonitor.model.Station;
@@ -46,9 +45,9 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public List<TotalResourceUsageDTO> getGroupedResourcesUsage(ResourceUsageRequestDTO resourceUsageRequestDTO) {
-        String dateTimeRange = resourceUsageRequestDTO.getDateTimeRange();
-        return resourceRepository.getResourcesUsageByDateTimeRange(dateTimeRange);
+    public List<TotalResourceUsageDTO> getGroupedResourcesUsage(Long stationId, String dateTimeRange) {
+        // TODO: validate dateTimeRange
+        return resourceRepository.getResourcesUsageByDateTimeRange(stationId, dateTimeRange);
     }
 
     private void fillResourcesUsageResponseDto(ResourcesUsageResponseDto resourcesUsageResponseDto, List<WashCycle> washCycles) {

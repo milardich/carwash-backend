@@ -1,6 +1,5 @@
 package com.sm.carwashmonitor.controller;
 
-import com.sm.carwashmonitor.dto.ResourceUsageRequestDTO;
 import com.sm.carwashmonitor.dto.TotalResourceUsageDTO;
 import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
 import com.sm.carwashmonitor.service.ResourceService;
@@ -27,8 +26,11 @@ public class ResourceController {
         return resourceService.getStationResourcesUsage(stationId, dateTimeFrom, dateTimeTo);
     }
 
-    @GetMapping("/station/resource-consumption/test")
-    public List<TotalResourceUsageDTO> getGroupedResourcesUsage(@RequestBody ResourceUsageRequestDTO resourceUsageRequestDTO) {
-        return resourceService.getGroupedResourcesUsage(resourceUsageRequestDTO);
+    @GetMapping("/station/{stationId}/resource-consumption/total")
+    public List<TotalResourceUsageDTO> getGroupedResourcesUsage(
+            @PathVariable("stationId") Long stationId,
+            @RequestParam("dateTimeRange") String dateTimeRange
+    ) {
+        return resourceService.getGroupedResourcesUsage(stationId, dateTimeRange);
     }
 }
