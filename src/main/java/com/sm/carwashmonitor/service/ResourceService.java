@@ -13,5 +13,5 @@ public interface ResourceService {
             LocalDateTime dateTimeTo
     );
 
-    List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String dateTimeRange);
+    List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval);
 }

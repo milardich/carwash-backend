@@ -1,6 +1,5 @@
 package com.sm.carwashmonitor.validation;
 
-import com.mysql.cj.util.StringUtils;
 import com.sm.carwashmonitor.exception.GenericValidationException;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -9,9 +8,9 @@ import java.util.List;
 @Component
 public class DateTimeValidation {
 
-    public void validate(String dateTimeRange) {
-        dateTimeRange = dateTimeRange.replace("\"", "");
-        String numberPrefix = dateTimeRange.split("\\s+")[0].replace("\"", "");
+    public void validate(String pgTimeInterval) {
+        pgTimeInterval = pgTimeInterval.replace("\"", "");
+        String numberPrefix = pgTimeInterval.split("\\s+")[0].replace("\"", "");
 
         try {
             Integer.parseInt(numberPrefix);
@@ -20,8 +19,7 @@ public class DateTimeValidation {
             throw new GenericValidationException("Invalid number prefix: " + e.getMessage() + " (should be '1 day', '2 months', etc.)");
         }
 
-
-        List<String> validDateTimeRanges = List.of(
+        List<String> validPgTimeIntervals = List.of(
                 numberPrefix + " hour",
                 numberPrefix + " day",
                 numberPrefix + " days",
@@ -31,8 +29,8 @@ public class DateTimeValidation {
                 numberPrefix + " years"
         );
 
-        if(!validDateTimeRanges.contains(dateTimeRange)) {
-            throw new GenericValidationException("Invalid dateTimeRange");
+        if(!validPgTimeIntervals.contains(pgTimeInterval)) {
+            throw new GenericValidationException("Invalid pgTimeInterval");
         }
     }
 }

@@ -29,8 +29,8 @@ public class ResourceController {
     @GetMapping("/station/{stationId}/resource-consumption/chart-data")
     public List<ResourceUsageChartDataDTO> getResourceUsageChartData(
             @PathVariable("stationId") Long stationId,
-            @RequestParam("dateTimeRange") String dateTimeRange
+            @RequestParam("pgTimeInterval") String pgTimeInterval
     ) {
-        return resourceService.getResourceUsageChartData(stationId, dateTimeRange);
+        return resourceService.getResourceUsageChartData(stationId, pgTimeInterval);
     }
 }

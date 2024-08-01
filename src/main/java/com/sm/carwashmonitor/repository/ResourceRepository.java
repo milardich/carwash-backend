@@ -5,5 +5,5 @@ import com.sm.carwashmonitor.dto.ResourceUsageChartDataDTO;
 import java.util.List;
 
 public interface ResourceRepository {
-    List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String dateTimeRange);
+    List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval);
 }

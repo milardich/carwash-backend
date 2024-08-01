@@ -44,13 +44,13 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String dateTimeRange) {
+    public List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval) {
         stationRepository.findById(stationId).orElseThrow(
                 () -> new EntityNotFoundException("Station not found"));
 
-        dateTimeValidation.validate(dateTimeRange);
+        dateTimeValidation.validate(pgTimeInterval);
 
-        return resourceRepository.getResourceUsageChartData(stationId, dateTimeRange);
+        return resourceRepository.getResourceUsageChartData(stationId, pgTimeInterval);
     }
 
     private void fillResourcesUsageResponseDto(ResourcesUsageResponseDto resourcesUsageResponseDto, List<WashCycle> washCycles) {
