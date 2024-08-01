@@ -16,8 +16,15 @@ public class ResourceRepositoryImpl implements ResourceRepository {
 
     @Override
     public List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String dateTimeRange) {
+        /*
+            day/days -> number of data points = number of days
+            month -> number of data points = number of months
+            year/years -> number of data points = number of years
+         */
+        String range = dateTimeRange.split("\\s+")[1].replace("\"", ""); // "1 day" -> "day"
         String sql =
-            "SELECT wc.wash_cycle_date::date AS wash_cycle_date, " +
+            "SELECT " +
+                "date_trunc('" + range + "', wc.wash_cycle_date) AS wash_cycle_date, " +
                 "SUM(wc.water_consumption) AS total_water_consumption, " +
                 "SUM(wc.wax_consumption) AS total_wax_consumption, " +
                 "SUM(wc.detergent_consumption) AS total_detergent_consumption " +
@@ -30,8 +37,8 @@ public class ResourceRepositoryImpl implements ResourceRepository {
                 "u.station_id = s.station_id " +
                 "AND " +
                 "s.station_id = " + stationId + " " +
-            "GROUP BY wc.wash_cycle_date::date " +
-            "ORDER BY wc.wash_cycle_date::date";
+            "GROUP BY date_trunc('" + range + "', wc.wash_cycle_date) " +
+            "ORDER BY date_trunc('" + range + "', wc.wash_cycle_date) ";
 
         return jdbcTemplate.query(sql, new ResourceUsageChartDataRowMapper());
     }

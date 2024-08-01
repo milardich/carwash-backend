@@ -11,13 +11,24 @@ public class DateTimeValidation {
 
     public void validate(String dateTimeRange) {
         dateTimeRange = dateTimeRange.replace("\"", "");
+        String numberPrefix = dateTimeRange.split("\\s+")[0].replace("\"", "");
+
+        try {
+            Integer.parseInt(numberPrefix);
+        }
+        catch (NumberFormatException e) {
+            throw new GenericValidationException("Invalid number prefix: " + e.getMessage() + " (should be '1 day', '2 months', etc.)");
+        }
+
+
         List<String> validDateTimeRanges = List.of(
-                "1 hour",
-                "1 day",
-                "7 days",
-                "1 month",
-                "6 months",
-                "1 year"
+                numberPrefix + " hour",
+                numberPrefix + " day",
+                numberPrefix + " days",
+                numberPrefix + " month",
+                numberPrefix + " months",
+                numberPrefix + " year",
+                numberPrefix + " years"
         );
 
         if(!validDateTimeRanges.contains(dateTimeRange)) {
