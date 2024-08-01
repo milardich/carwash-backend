@@ -1,5 +1,7 @@
 package com.sm.carwashmonitor.validation;
 
+import com.sm.carwashmonitor.model.Unit;
+import com.sm.carwashmonitor.model.WashCycle;
 import com.sm.carwashmonitor.model.enumeration.UnitStatus;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Component;
@@ -21,5 +23,11 @@ public class UnitValidation {
             }
         }
         return false;
+    }
+
+    public void validateUnitCointainsWashCycle(Unit unit, WashCycle washCycle) {
+        if(!unit.getWashCycles().contains(washCycle)) {
+            throw new EntityNotFoundException("Unit does not contain wash cycle");
+        }
     }
 }

@@ -10,14 +10,15 @@ import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.repository.UnitRepository;
 import com.sm.carwashmonitor.repository.WashCycleRepository;
 import com.sm.carwashmonitor.service.WashCycleService;
+import com.sm.carwashmonitor.validation.StationValidation;
+import com.sm.carwashmonitor.validation.UnitValidation;
+import com.sm.carwashmonitor.validation.WashCycleValidation;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,20 +28,23 @@ public class WashCycleServiceImpl implements WashCycleService {
     private final WashCycleMapper washCycleMapper;
     private final UnitRepository unitRepository;
     private final StationRepository stationRepository;
+    private final StationValidation stationValidation;
+    private final UnitValidation unitValidation;
+    private final WashCycleValidation washCycleValidation;
 
     @Override
     public WashCycleResponseDto createNewWashCycle(Long stationId, Long unitId, WashCycleRequestDto washCycleRequestDto) {
-        Optional<Station> station = stationRepository.findById(stationId);
-        if(station.isEmpty()) {
-            throw new EntityNotFoundException("Station not found");
-        }
+        washCycleValidation.validateWashCycleRequest(washCycleRequestDto);
+
+        Station station = stationRepository.findById(stationId).orElseThrow(
+                () -> new EntityNotFoundException("Station not found"));
+
+        Unit unit = unitRepository.findById(unitId).orElseThrow(
+                () -> new EntityNotFoundException("Unit not found"));
+
+        stationValidation.validateStationContainsUnit(station, unit);
         WashCycle washCycle = washCycleMapper.toEntity(washCycleRequestDto);
-        Optional<Unit> unit = unitRepository.findById(unitId);
-        if(unit.isEmpty()) {
-            throw new EntityNotFoundException("Unit not found");
-        }
-        // TODO: validate if unit is in station
-        washCycle.setUnit(unit.get());
+        washCycle.setUnit(unit);
         washCycle.setWashCycleDate(LocalDateTime.now());
         washCycleRepository.save(washCycle);
         WashCycleResponseDto washCycleResponseDto = washCycleMapper.toDto(washCycle);
@@ -50,45 +54,33 @@ public class WashCycleServiceImpl implements WashCycleService {
 
     @Override
     public WashCycleResponseDto getWashCycle(Long stationId, Long unitId, Long washCycleId) {
-        // TODO: validate
-        Optional<Station> station = stationRepository.findById(stationId);
-        if(station.isEmpty()) {
-            throw new EntityNotFoundException("Station not found");
-        }
-        Optional<Unit> unit = unitRepository.findById(unitId);
-        if(unit.isEmpty()) {
-            throw new EntityNotFoundException("Unit not found");
-        }
-        if(!station.get().getUnits().contains(unit.get())) {
-            throw new EntityNotFoundException("Station does not contain unit with id " + unitId);
-        }
-        Optional<WashCycle> washCycle = washCycleRepository.findById(washCycleId);
-        if(washCycle.isEmpty()) {
-            throw new EntityNotFoundException("Wash cycle not found");
-        }
-        if(!unit.get().getWashCycles().contains(washCycle.get())) {
-            throw new EntityNotFoundException("Unit does not contain wash cycle with id " + washCycleId);
-        }
-        WashCycleResponseDto washCycleResponseDto = washCycleMapper.toDto(washCycle.get());
-        washCycleResponseDto.setWashCycleDate(washCycle.get().getWashCycleDate().toString());
+        Station station = stationRepository.findById(stationId).orElseThrow(
+                () -> new EntityNotFoundException("Station not found"));
+
+        Unit unit = unitRepository.findById(unitId).orElseThrow(
+                () -> new EntityNotFoundException("Unit not found"));
+
+        WashCycle washCycle = washCycleRepository.findById(washCycleId).orElseThrow(
+                () -> new EntityNotFoundException("WashCycle not found"));
+
+        stationValidation.validateStationContainsUnit(station, unit);
+        unitValidation.validateUnitCointainsWashCycle(unit, washCycle);
+        WashCycleResponseDto washCycleResponseDto = washCycleMapper.toDto(washCycle);
+        washCycleResponseDto.setWashCycleDate(washCycle.getWashCycleDate().toString());
         washCycleResponseDto.setStationId(stationId);
         return washCycleResponseDto;
     }
 
     @Override
     public List<WashCycleResponseDto> getFilteredWashCycles(Long stationId, Long unitId, LocalDateTime dateFrom, LocalDateTime dateTo) {
-        // TODO: validate
-        Optional<Station> station = stationRepository.findById(stationId);
-        if(station.isEmpty()) {
-            throw new EntityNotFoundException("Station not found");
-        }
-        Optional<Unit> unit = unitRepository.findById(unitId);
-        if(unit.isEmpty()) {
-            throw new EntityNotFoundException("Unit not found");
-        }
-        if(!station.get().getUnits().contains(unit.get())) {
-            throw new EntityNotFoundException("Station does not contain unit with id " + unitId);
-        }
+        Station station = stationRepository.findById(stationId).orElseThrow(
+                () -> new EntityNotFoundException("Station not found"));
+
+        Unit unit = unitRepository.findById(unitId).orElseThrow(
+                () -> new EntityNotFoundException("Unit not found"));
+
+        stationValidation.validateStationContainsUnit(station, unit);
+
         List<WashCycle> filteredWashCycles = washCycleRepository.getFilteredWashCyclesByUnitId(unitId, dateFrom, dateTo);
         List<WashCycleResponseDto> filteredWashCyclesResponse = new ArrayList<>();
         filteredWashCycles.forEach(washCycle -> {

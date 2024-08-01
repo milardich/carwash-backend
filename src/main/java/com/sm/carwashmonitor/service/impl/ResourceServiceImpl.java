@@ -10,6 +10,7 @@ import com.sm.carwashmonitor.repository.ResourceRepository;
 import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.repository.WashCycleRepository;
 import com.sm.carwashmonitor.service.ResourceService;
+import com.sm.carwashmonitor.validation.DateTimeValidation;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,19 +24,17 @@ public class ResourceServiceImpl implements ResourceService {
     private final WashCycleRepository washCycleRepository;
     private final StationRepository stationRepository;
     private final ResourceRepository resourceRepository;
+    private final DateTimeValidation dateTimeValidation;
 
     @Override
     public ResourcesUsageResponseDto getStationResourcesUsage(Long stationId, LocalDateTime dateTimeFrom, LocalDateTime dateTimeTo) {
 
-        Optional<Station> station = stationRepository.findById(stationId);
-        if(station.isEmpty()) {
-            throw new EntityNotFoundException("Station not found.");
-        }
-        List<Unit> units = station.get().getUnits();
+        Station station = stationRepository.findById(stationId).orElseThrow(
+                () -> new EntityNotFoundException("Station not found"));
+        List<Unit> units = station.getUnits();
         List<WashCycle> washCycles = new ArrayList<>();
-        units.forEach(unit -> {
-            washCycles.addAll(washCycleRepository.getFilteredWashCyclesByUnitId(unit.getUnitId(), dateTimeFrom, dateTimeTo));
-        });
+        units.forEach(unit ->
+                washCycles.addAll(washCycleRepository.getFilteredWashCyclesByUnitId(unit.getUnitId(), dateTimeFrom, dateTimeTo)));
 
         washCycles.sort(Comparator.comparing(WashCycle::getWashCycleDate));
 
@@ -46,7 +45,11 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String dateTimeRange) {
-        // TODO: validate dateTimeRange
+        stationRepository.findById(stationId).orElseThrow(
+                () -> new EntityNotFoundException("Station not found"));
+
+        dateTimeValidation.validate(dateTimeRange);
+
         return resourceRepository.getResourceUsageChartData(stationId, dateTimeRange);
     }
 
