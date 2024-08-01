@@ -1,7 +1,7 @@
 package com.sm.carwashmonitor.repository.impl;
 
-import com.sm.carwashmonitor.dto.TotalResourceUsageDTO;
-import com.sm.carwashmonitor.mapper.TotalResourceUsageRowMapper;
+import com.sm.carwashmonitor.dto.ResourceUsageChartDataDTO;
+import com.sm.carwashmonitor.mapper.ResourceUsageChartDataRowMapper;
 import com.sm.carwashmonitor.repository.ResourceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,7 +15,7 @@ public class ResourceRepositoryImpl implements ResourceRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<TotalResourceUsageDTO> getResourcesUsageByDateTimeRange(Long stationId, String dateTimeRange) {
+    public List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String dateTimeRange) {
         String sql =
             "SELECT wc.wash_cycle_date::date AS wash_cycle_date, " +
                 "SUM(wc.water_consumption) AS total_water_consumption, " +
@@ -33,6 +33,6 @@ public class ResourceRepositoryImpl implements ResourceRepository {
             "GROUP BY wc.wash_cycle_date::date " +
             "ORDER BY wc.wash_cycle_date::date";
 
-        return jdbcTemplate.query(sql, new TotalResourceUsageRowMapper());
+        return jdbcTemplate.query(sql, new ResourceUsageChartDataRowMapper());
     }
 }

@@ -1,6 +1,6 @@
 package com.sm.carwashmonitor.controller;
 
-import com.sm.carwashmonitor.dto.TotalResourceUsageDTO;
+import com.sm.carwashmonitor.dto.ResourceUsageChartDataDTO;
 import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
 import com.sm.carwashmonitor.service.ResourceService;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +26,11 @@ public class ResourceController {
         return resourceService.getStationResourcesUsage(stationId, dateTimeFrom, dateTimeTo);
     }
 
-    @GetMapping("/station/{stationId}/resource-consumption/total")
-    public List<TotalResourceUsageDTO> getGroupedResourcesUsage(
+    @GetMapping("/station/{stationId}/resource-consumption/chart-data")
+    public List<ResourceUsageChartDataDTO> getResourceUsageChartData(
             @PathVariable("stationId") Long stationId,
             @RequestParam("dateTimeRange") String dateTimeRange
     ) {
-        return resourceService.getGroupedResourcesUsage(stationId, dateTimeRange);
+        return resourceService.getResourceUsageChartData(stationId, dateTimeRange);
     }
 }
