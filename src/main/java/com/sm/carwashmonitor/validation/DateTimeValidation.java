@@ -21,6 +21,7 @@ public class DateTimeValidation {
 
         List<String> validPgTimeIntervals = List.of(
                 numberPrefix + " hour",
+                numberPrefix + " hours",
                 numberPrefix + " day",
                 numberPrefix + " days",
                 numberPrefix + " month",

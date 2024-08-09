@@ -14,7 +14,12 @@ import com.sm.carwashmonitor.validation.DateTimeValidation;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -43,6 +48,9 @@ public class ResourceServiceImpl implements ResourceService {
         return resourcesUsageResponseDto;
     }
 
+    /*
+     *   TODO: REFACTOR
+     */
     @Override
     public List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval) {
         stationRepository.findById(stationId).orElseThrow(
@@ -50,7 +58,32 @@ public class ResourceServiceImpl implements ResourceService {
 
         dateTimeValidation.validate(pgTimeInterval);
 
-        return resourceRepository.getResourceUsageChartData(stationId, pgTimeInterval);
+        String pgTimeIntervalSuffix = pgTimeInterval.split("\\s+")[1].replace("\"", ""); // "1 day" -> "day"
+
+        List<ResourceUsageChartDataDTO> usages = resourceRepository.getResourceUsageChartData(stationId, pgTimeInterval);
+
+        usages.forEach(u -> {
+
+            LocalDateTime dateTime = LocalDateTime.parse(u.getWashCycleDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            Integer year = dateTime.getYear();
+            Integer month = dateTime.getMonthValue();
+            Integer day = dateTime.getDayOfMonth();
+            Integer hour = dateTime.getHour();
+            Integer minute = dateTime.getMinute();
+
+            if(pgTimeIntervalSuffix.equals("hours")) {
+                u.setWashCycleDate(hour + ":" + minute + "0");
+            } else if (pgTimeIntervalSuffix.equals("days")) {
+                u.setWashCycleDate(day + "." + month + ".");
+            } else if (pgTimeIntervalSuffix.equals("months")) {
+                u.setWashCycleDate(month.toString());
+            } else if (pgTimeIntervalSuffix.equals("years")) {
+                u.setWashCycleDate(year.toString());
+            }
+
+        });
+
+        return usages;
     }
 
     private void fillResourcesUsageResponseDto(ResourcesUsageResponseDto resourcesUsageResponseDto, List<WashCycle> washCycles) {
