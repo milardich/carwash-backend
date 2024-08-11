@@ -65,9 +65,6 @@ public class UnitServiceTests {
         this.unit = new Unit();
         this.unit.setStatus(UnitStatus.INACTIVE.name());
         this.unit.setCoinTrayAmount(0);
-        this.unit.setTotalWaterConsumption(this.testFloat);
-        this.unit.setTotalDetergentConsumption(this.testFloat);
-        this.unit.setTotalWaxConsumption(this.testFloat);
         this.unit.setStation(this.station);
 
         this.stationDTO = new StationDTO();

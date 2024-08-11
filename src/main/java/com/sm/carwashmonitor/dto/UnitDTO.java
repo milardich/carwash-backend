@@ -9,7 +9,4 @@ public class UnitDTO {
     private Long unitId;
     private String status;
     private Integer coinTrayAmount;
-    private Float totalWaterConsumption;
-    private Float totalDetergentConsumption;
-    private Float totalWaxConsumption;
 }

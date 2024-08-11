@@ -31,15 +31,6 @@ public class Unit {
     @Column(name = "coin_tray_amount")
     private Integer coinTrayAmount;
 
-    @Column(name = "total_water_consumption")
-    private Float totalWaterConsumption;
-
-    @Column(name = "total_detergent_consumption")
-    private Float totalDetergentConsumption;
-
-    @Column(name = "total_wax_consumption")
-    private Float totalWaxConsumption;
-
     @JsonManagedReference
     @OneToMany(mappedBy = "unit")
     private List<WashCycle> washCycles;

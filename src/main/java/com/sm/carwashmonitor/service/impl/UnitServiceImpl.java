@@ -67,8 +67,5 @@ public class UnitServiceImpl implements UnitService {
     private void setDefaultUnitValues(Unit unit) {
         unit.setStatus(UnitStatus.INACTIVE.name());
         unit.setCoinTrayAmount(0);
-        unit.setTotalWaterConsumption(0.00F);
-        unit.setTotalDetergentConsumption(0.00F);
-        unit.setTotalWaxConsumption(0.00F);
     }
 }
