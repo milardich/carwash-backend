@@ -2,6 +2,7 @@ package com.sm.carwashmonitor.controller;
 
 import com.sm.carwashmonitor.dto.StationDTO;
 import com.sm.carwashmonitor.dto.UnitDTO;
+import com.sm.carwashmonitor.dto.UnitInfoDTO;
 import com.sm.carwashmonitor.dto.UnitStatusDTO;
 import com.sm.carwashmonitor.service.UnitService;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,14 @@ public class UnitController {
                            @PathVariable(name = "unitId") Long unitId
     ) {
         return unitService.getUnit(stationId, unitId);
+    }
+
+    @GetMapping("/{unitId}/info")
+    public UnitInfoDTO getUnitInfo(
+            @PathVariable("unitId") Long unitId,
+            @RequestParam("dateTimeFrom") String dateTimeFrom,
+            @RequestParam("dateTimeTo") String dateTimeTo
+    ) {
+        return unitService.getUnitInfo(unitId, dateTimeFrom, dateTimeTo);
     }
 }

@@ -1,7 +1,7 @@
 package com.sm.carwashmonitor.service.impl;
 
 import com.sm.carwashmonitor.dto.ResourceChartDataDTO;
-import com.sm.carwashmonitor.repository.ResourceRepository;
+import com.sm.carwashmonitor.repository.ChartDataRepository;
 import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.service.ChartDataService;
 import com.sm.carwashmonitor.validation.DateTimeValidation;
@@ -17,7 +17,7 @@ import java.util.*;
 public class ChartDataServiceImpl implements ChartDataService {
 
     private final StationRepository stationRepository;
-    private final ResourceRepository resourceRepository;
+    private final ChartDataRepository chartDataRepository;
     private final DateTimeValidation dateTimeValidation;
 
     /*
@@ -32,7 +32,7 @@ public class ChartDataServiceImpl implements ChartDataService {
 
         String pgTimeIntervalSuffix = pgTimeInterval.split("\\s+")[1].replace("\"", ""); // "1 day" -> "day"
 
-        List<ResourceChartDataDTO> usages = resourceRepository.getResourceUsageChartData(stationId, pgTimeInterval);
+        List<ResourceChartDataDTO> usages = chartDataRepository.getResourceUsageChartData(stationId, pgTimeInterval);
 
         usages.forEach(u -> {
 

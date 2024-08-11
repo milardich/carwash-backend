@@ -4,7 +4,7 @@ import com.sm.carwashmonitor.dto.ResourceChartDataDTO;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.model.Unit;
 import com.sm.carwashmonitor.model.WashCycle;
-import com.sm.carwashmonitor.repository.ResourceRepository;
+import com.sm.carwashmonitor.repository.ChartDataRepository;
 import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.repository.WashCycleRepository;
 import com.sm.carwashmonitor.service.impl.ChartDataServiceImpl;
@@ -35,7 +35,7 @@ public class ChartDataServiceTests {
     private DateTimeValidation dateTimeValidation;
 
     @Mock
-    private ResourceRepository resourceRepository;
+    private ChartDataRepository chartDataRepository;
 
     @InjectMocks
     private ChartDataServiceImpl resourceService;
@@ -83,7 +83,7 @@ public class ChartDataServiceTests {
     void testGetResourceUsageChartDataReturnDTOList() throws Exception {
         Mockito.when(stationRepository.findById(Mockito.any())).thenReturn(Optional.of(this.station));
         Mockito.doNothing().when(dateTimeValidation).validate(Mockito.any());
-        Mockito.when(resourceRepository.getResourceUsageChartData(Mockito.any(), Mockito.any())).thenReturn(this.resourceChartDataDTOs);
+        Mockito.when(chartDataRepository.getResourceUsageChartData(Mockito.any(), Mockito.any())).thenReturn(this.resourceChartDataDTOs);
 
         List<ResourceChartDataDTO> actualResponse = resourceService.getResourceUsageChartData(55L, "30 days");
 

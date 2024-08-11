@@ -2,6 +2,7 @@ package com.sm.carwashmonitor.service.impl;
 
 import com.sm.carwashmonitor.dto.StationDTO;
 import com.sm.carwashmonitor.dto.UnitDTO;
+import com.sm.carwashmonitor.dto.UnitInfoDTO;
 import com.sm.carwashmonitor.dto.UnitStatusDTO;
 import com.sm.carwashmonitor.mapper.StationMapper;
 import com.sm.carwashmonitor.mapper.UnitMapper;
@@ -62,6 +63,12 @@ public class UnitServiceImpl implements UnitService {
                 () -> new EntityNotFoundException("Unit not found"));
 
         return unitMapper.toDto(unit);
+    }
+
+    @Override
+    public UnitInfoDTO getUnitInfo(Long unitId, String dateTimeFrom, String dateTimeTo) {
+        UnitInfoDTO unitInfoDTO = unitRepository.getUnitInfo(unitId, dateTimeFrom, dateTimeTo);
+        return unitInfoDTO;
     }
 
     private void setDefaultUnitValues(Unit unit) {

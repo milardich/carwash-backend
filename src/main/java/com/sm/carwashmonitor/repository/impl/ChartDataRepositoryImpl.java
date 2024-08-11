@@ -2,7 +2,7 @@ package com.sm.carwashmonitor.repository.impl;
 
 import com.sm.carwashmonitor.dto.ResourceChartDataDTO;
 import com.sm.carwashmonitor.mapper.ResourceChartDataRowMapper;
-import com.sm.carwashmonitor.repository.ResourceRepository;
+import com.sm.carwashmonitor.repository.ChartDataRepository;
 import com.sm.carwashmonitor.validation.DateTimeValidation;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @AllArgsConstructor
-public class ResourceRepositoryImpl implements ResourceRepository {
+public class ChartDataRepositoryImpl implements ChartDataRepository {
 
     private JdbcTemplate jdbcTemplate;
     private DateTimeValidation dateTimeValidation;
