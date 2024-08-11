@@ -65,10 +65,15 @@ public class UnitServiceImpl implements UnitService {
         return unitMapper.toDto(unit);
     }
 
+    /*
+    TODO:
+        - validate dates
+     */
     @Override
     public UnitInfoDTO getUnitInfo(Long unitId, String dateTimeFrom, String dateTimeTo) {
-        UnitInfoDTO unitInfoDTO = unitRepository.getUnitInfo(unitId, dateTimeFrom, dateTimeTo);
-        return unitInfoDTO;
+        unitRepository.findById(unitId).orElseThrow(
+                () -> new EntityNotFoundException("Unit not found"));
+        return unitRepository.getUnitInfo(unitId, dateTimeFrom, dateTimeTo);
     }
 
     private void setDefaultUnitValues(Unit unit) {

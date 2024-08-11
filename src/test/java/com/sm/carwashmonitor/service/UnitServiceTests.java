@@ -1,6 +1,7 @@
 package com.sm.carwashmonitor.service;
 
 import com.sm.carwashmonitor.dto.StationDTO;
+import com.sm.carwashmonitor.dto.UnitInfoDTO;
 import com.sm.carwashmonitor.mapper.StationMapper;
 import com.sm.carwashmonitor.mapper.UnitMapper;
 import com.sm.carwashmonitor.model.Station;
@@ -97,5 +98,22 @@ public class UnitServiceTests {
         );
 
         Assertions.assertEquals("Station not found", thrownException.getMessage());
+    }
+
+    @Test
+    void testGetUnitInfo() throws Exception {
+        UnitInfoDTO unitInfoDTO = new UnitInfoDTO();
+        unitInfoDTO.setTotalDetergentConsumption(1.0F);
+        unitInfoDTO.setTotalWaterConsumption(1.0F);
+        unitInfoDTO.setTotalWaxConsumption(1.0F);
+        unitInfoDTO.setTotalCoinAmount(1);
+        unitInfoDTO.setWashCycleCount(1);
+
+        Mockito.when(unitRepository.findById(Mockito.any())).thenReturn(Optional.of(new Unit()));
+        Mockito.when(unitRepository.getUnitInfo(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(unitInfoDTO);
+
+        UnitInfoDTO actual = unitService.getUnitInfo(1L, "2024-01-01T00:00:00", "2024-08-10T23:59:59");
+
+        Assertions.assertEquals(unitInfoDTO.getWashCycleCount(), actual.getWashCycleCount());
     }
 }
