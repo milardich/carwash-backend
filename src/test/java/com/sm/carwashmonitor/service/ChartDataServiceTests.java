@@ -7,7 +7,7 @@ import com.sm.carwashmonitor.model.WashCycle;
 import com.sm.carwashmonitor.repository.ResourceRepository;
 import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.repository.WashCycleRepository;
-import com.sm.carwashmonitor.service.impl.ResourceServiceImpl;
+import com.sm.carwashmonitor.service.impl.ChartDataServiceImpl;
 import com.sm.carwashmonitor.validation.DateTimeValidation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,13 +18,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-public class ResourceServiceTests {
+public class ChartDataServiceTests {
 
     @Mock
     private WashCycleRepository washCycleRepository;
@@ -39,7 +38,7 @@ public class ResourceServiceTests {
     private ResourceRepository resourceRepository;
 
     @InjectMocks
-    private ResourceServiceImpl resourceService;
+    private ChartDataServiceImpl resourceService;
 
     // test objects
     Station station;
