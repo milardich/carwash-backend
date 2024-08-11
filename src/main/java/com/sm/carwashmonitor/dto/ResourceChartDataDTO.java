@@ -7,7 +7,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class ResourceUsageChartDataDTO {
+public class ResourceChartDataDTO {
     String washCycleDate;
     Float totalWaterConsumption;
     Float totalWaxConsumption;

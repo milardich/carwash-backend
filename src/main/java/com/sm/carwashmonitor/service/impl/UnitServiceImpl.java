@@ -1,8 +1,8 @@
 package com.sm.carwashmonitor.service.impl;
 
-import com.sm.carwashmonitor.dto.StationResponseDto;
-import com.sm.carwashmonitor.dto.UnitDto;
-import com.sm.carwashmonitor.dto.UnitStatusDto;
+import com.sm.carwashmonitor.dto.StationDTO;
+import com.sm.carwashmonitor.dto.UnitDTO;
+import com.sm.carwashmonitor.dto.UnitStatusDTO;
 import com.sm.carwashmonitor.mapper.StationMapper;
 import com.sm.carwashmonitor.mapper.UnitMapper;
 import com.sm.carwashmonitor.model.Station;
@@ -30,7 +30,7 @@ public class UnitServiceImpl implements UnitService {
     private final StationValidation stationValidation;
 
     @Override
-    public StationResponseDto createUnit(Long stationId) {
+    public StationDTO createUnit(Long stationId) {
         Unit unit = new Unit();
         Station station = stationRepository.findById(stationId).orElseThrow(()
                 -> new EntityNotFoundException("Station not found"));
@@ -41,7 +41,7 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
-    public UnitDto updateUnitStatus(Long stationId, Long unitId, UnitStatusDto unitStatusDto) {
+    public UnitDTO updateUnitStatus(Long stationId, Long unitId, UnitStatusDTO unitStatusDto) {
         Station station = stationRepository.findById(stationId).orElseThrow(
                 () -> new EntityNotFoundException("Station not found"));
 
@@ -57,7 +57,7 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
-    public UnitDto getUnit(Long stationId, Long unitId) {
+    public UnitDTO getUnit(Long stationId, Long unitId) {
         Unit unit = unitRepository.findById(unitId).orElseThrow(
                 () -> new EntityNotFoundException("Unit not found"));
 

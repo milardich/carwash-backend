@@ -1,6 +1,6 @@
 package com.sm.carwashmonitor.service;
 
-import com.sm.carwashmonitor.dto.StationResponseDto;
+import com.sm.carwashmonitor.dto.StationDTO;
 import com.sm.carwashmonitor.mapper.StationMapper;
 import com.sm.carwashmonitor.mapper.UnitMapper;
 import com.sm.carwashmonitor.model.Station;
@@ -21,7 +21,6 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,7 +44,7 @@ public class UnitServiceTests {
     // test objects
     Station station;
     Optional<Station> optionalStation;
-    StationResponseDto stationResponseDto;
+    StationDTO stationDTO;
     Unit unit;
     String testString = "test";
     Long testLong = 55L;
@@ -71,24 +70,24 @@ public class UnitServiceTests {
         this.unit.setTotalWaxConsumption(this.testFloat);
         this.unit.setStation(this.station);
 
-        this.stationResponseDto = new StationResponseDto();
-        this.stationResponseDto.setStationId(this.testLong);
-        this.stationResponseDto.setStationName(this.testString);
-        this.stationResponseDto.setCity(this.testString);
-        this.stationResponseDto.setCountry(this.testString);
-        this.stationResponseDto.setStreetName(this.testString);
-        this.stationResponseDto.setUnits(new ArrayList<>());
+        this.stationDTO = new StationDTO();
+        this.stationDTO.setStationId(this.testLong);
+        this.stationDTO.setStationName(this.testString);
+        this.stationDTO.setCity(this.testString);
+        this.stationDTO.setCountry(this.testString);
+        this.stationDTO.setStreetName(this.testString);
+        this.stationDTO.setUnits(new ArrayList<>());
     }
 
     @Test
     void testCreateUnitReturnStationResponseDTO() throws Exception {
         Mockito.when(stationRepository.findById(Mockito.any())).thenReturn(this.optionalStation);
         Mockito.when(unitRepository.save(Mockito.any())).thenReturn(this.unit);
-        Mockito.when(stationMapper.toDto(Mockito.any())).thenReturn(this.stationResponseDto);
+        Mockito.when(stationMapper.toDto(Mockito.any())).thenReturn(this.stationDTO);
 
-        StationResponseDto actualResponse = unitService.createUnit(55L);
+        StationDTO actualResponse = unitService.createUnit(55L);
 
-        Assertions.assertEquals(this.stationResponseDto.getStationId(), actualResponse.getStationId());
+        Assertions.assertEquals(this.stationDTO.getStationId(), actualResponse.getStationId());
     }
 
     @Test

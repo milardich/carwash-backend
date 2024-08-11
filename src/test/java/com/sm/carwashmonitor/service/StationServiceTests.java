@@ -1,7 +1,7 @@
 package com.sm.carwashmonitor.service;
 
-import com.sm.carwashmonitor.dto.StationRequestDto;
-import com.sm.carwashmonitor.dto.StationResponseDto;
+import com.sm.carwashmonitor.dto.StationDTO;
+import com.sm.carwashmonitor.dto.StationRequestDTO;
 import com.sm.carwashmonitor.exception.GenericValidationException;
 import com.sm.carwashmonitor.mapper.StationMapper;
 import com.sm.carwashmonitor.model.Station;
@@ -37,19 +37,19 @@ public class StationServiceTests {
     private StationServiceImpl stationService;
 
     // test objects
-    private StationRequestDto stationRequestDto;
-    private StationResponseDto stationResponseDto;
+    private StationRequestDTO stationRequestDto;
+    private StationDTO stationDTO;
     private Station station;
     private final String testString = "test";
     private final Long testLong = 55L;
 
     @BeforeEach
     public void init() {
-        this.stationRequestDto = new StationRequestDto();
-        this.stationResponseDto = new StationResponseDto();
+        this.stationRequestDto = new StationRequestDTO();
+        this.stationDTO = new StationDTO();
         this.station = new Station();
         fillStationRequestDTO(this.stationRequestDto);
-        fillStationResponseDto(this.stationResponseDto);
+        fillStationResponseDto(this.stationDTO);
         fillStation(this.station);
     }
 
@@ -58,11 +58,11 @@ public class StationServiceTests {
         Mockito.doNothing().when(stationValidation).validate(Mockito.any());
         Mockito.when(stationMapper.toEntity(Mockito.any())).thenReturn(this.station);
         Mockito.when(stationRepository.save(Mockito.any())).thenReturn(this.station);
-        Mockito.doReturn(stationResponseDto).when(stationMapper).toDto(Mockito.any());
+        Mockito.doReturn(stationDTO).when(stationMapper).toDto(Mockito.any());
 
-        StationResponseDto actualResponse = stationService.createStation(stationRequestDto);
+        StationDTO actualResponse = stationService.createStation(stationRequestDto);
 
-        Assertions.assertEquals(stationResponseDto.getCity(), actualResponse.getCity());
+        Assertions.assertEquals(stationDTO.getCity(), actualResponse.getCity());
         Mockito.verify(stationRepository).save(Mockito.any(Station.class));
     }
 
@@ -84,9 +84,9 @@ public class StationServiceTests {
     @Test
     void testGetStationReturnStationResponseDTO() throws Exception {
         Mockito.when(stationRepository.findById(Mockito.any())).thenReturn(Optional.of(this.station));
-        Mockito.when(stationMapper.toDto(Mockito.any())).thenReturn(this.stationResponseDto);
+        Mockito.when(stationMapper.toDto(Mockito.any())).thenReturn(this.stationDTO);
 
-        StationResponseDto actualResponse = stationService.getStation(this.testLong);
+        StationDTO actualResponse = stationService.getStation(this.testLong);
 
         Assertions.assertEquals(this.testLong, actualResponse.getStationId());
     }
@@ -111,22 +111,22 @@ public class StationServiceTests {
         stations.add(station1);
         stations.add(station2);
 
-        List<StationResponseDto> stationResponseDtos = new ArrayList<>();
-        StationResponseDto stationResponseDto1 = this.stationResponseDto;
-        StationResponseDto stationResponseDto2 = this.stationResponseDto;
-        stationResponseDtos.add(stationResponseDto1);
-        stationResponseDtos.add(stationResponseDto2);
+        List<StationDTO> stationDTOs = new ArrayList<>();
+        StationDTO stationDTO1 = this.stationDTO;
+        StationDTO stationDTO2 = this.stationDTO;
+        stationDTOs.add(stationDTO1);
+        stationDTOs.add(stationDTO2);
 
         Mockito.when(stationRepository.findAll()).thenReturn(stations);
-        Mockito.when(stationMapper.toDto(stations.get(0))).thenReturn(stationResponseDtos.get(0));
-        Mockito.when(stationMapper.toDto(stations.get(1))).thenReturn(stationResponseDtos.get(1));
+        Mockito.when(stationMapper.toDto(stations.get(0))).thenReturn(stationDTOs.get(0));
+        Mockito.when(stationMapper.toDto(stations.get(1))).thenReturn(stationDTOs.get(1));
 
-        List<StationResponseDto> actualResponse = stationService.getAllStations();
+        List<StationDTO> actualResponse = stationService.getAllStations();
 
-        Assertions.assertEquals(stationResponseDtos.get(1), actualResponse.get(1));
+        Assertions.assertEquals(stationDTOs.get(1), actualResponse.get(1));
     }
 
-    private void fillStationRequestDTO(StationRequestDto stationRequestDto) {
+    private void fillStationRequestDTO(StationRequestDTO stationRequestDto) {
         stationRequestDto.setStationName(this.testString);
         stationRequestDto.setCountry(this.testString);
         stationRequestDto.setCity(this.testString);
@@ -134,14 +134,14 @@ public class StationServiceTests {
         stationRequestDto.setStreetNumber(this.testString);
     }
 
-    private void fillStationResponseDto(StationResponseDto stationResponseDto) {
-        stationResponseDto.setStationId(this.testLong);
-        stationResponseDto.setStationName(this.testString);
-        stationResponseDto.setCountry(this.testString);
-        stationResponseDto.setCity(this.testString);
-        stationResponseDto.setStreetName(this.testString);
-        stationResponseDto.setStreetNumber(this.testString);
-        stationResponseDto.setUnits(null);
+    private void fillStationResponseDto(StationDTO stationDTO) {
+        stationDTO.setStationId(this.testLong);
+        stationDTO.setStationName(this.testString);
+        stationDTO.setCountry(this.testString);
+        stationDTO.setCity(this.testString);
+        stationDTO.setStreetName(this.testString);
+        stationDTO.setStreetNumber(this.testString);
+        stationDTO.setUnits(null);
     }
 
     private void fillStation(Station station) {

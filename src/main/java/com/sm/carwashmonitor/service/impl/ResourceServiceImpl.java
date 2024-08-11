@@ -1,9 +1,8 @@
 package com.sm.carwashmonitor.service.impl;
 
-import com.sm.carwashmonitor.dto.ResourceUsageChartDataDTO;
+import com.sm.carwashmonitor.dto.ResourceChartDataDTO;
 import com.sm.carwashmonitor.repository.ResourceRepository;
 import com.sm.carwashmonitor.repository.StationRepository;
-import com.sm.carwashmonitor.repository.WashCycleRepository;
 import com.sm.carwashmonitor.service.ResourceService;
 import com.sm.carwashmonitor.validation.DateTimeValidation;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,7 +24,7 @@ public class ResourceServiceImpl implements ResourceService {
      *   TODO: REFACTOR
      */
     @Override
-    public List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval) {
+    public List<ResourceChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval) {
         stationRepository.findById(stationId).orElseThrow(
                 () -> new EntityNotFoundException("Station not found"));
 
@@ -33,7 +32,7 @@ public class ResourceServiceImpl implements ResourceService {
 
         String pgTimeIntervalSuffix = pgTimeInterval.split("\\s+")[1].replace("\"", ""); // "1 day" -> "day"
 
-        List<ResourceUsageChartDataDTO> usages = resourceRepository.getResourceUsageChartData(stationId, pgTimeInterval);
+        List<ResourceChartDataDTO> usages = resourceRepository.getResourceUsageChartData(stationId, pgTimeInterval);
 
         usages.forEach(u -> {
 

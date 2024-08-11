@@ -1,7 +1,7 @@
 package com.sm.carwashmonitor.mapper;
 
-import com.sm.carwashmonitor.dto.WashCycleRequestDto;
-import com.sm.carwashmonitor.dto.WashCycleResponseDto;
+import com.sm.carwashmonitor.dto.WashCycleRequestDTO;
+import com.sm.carwashmonitor.dto.WashCycleDTO;
 import com.sm.carwashmonitor.model.WashCycle;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -14,7 +14,7 @@ public interface WashCycleMapper {
     @Mapping(target = "detergentConsumption", source = "detergentConsumption")
     @Mapping(target = "waxConsumption", source = "waxConsumption")
     @Mapping(target = "coinAmount", source = "coinAmount")
-    WashCycle toEntity(WashCycleRequestDto washCycleRequestDto);
+    WashCycle toEntity(WashCycleRequestDTO washCycleRequestDto);
 
     @Mapping(target = "washCycleId", source = "washCycleId")
     @Mapping(target = "unitId", expression = "java(washCycle.getUnit().getUnitId())")
@@ -23,5 +23,5 @@ public interface WashCycleMapper {
     @Mapping(target = "detergentConsumption", source = "detergentConsumption")
     @Mapping(target = "waxConsumption", source = "waxConsumption")
     @Mapping(target = "coinAmount", source = "coinAmount")
-    WashCycleResponseDto toDto(WashCycle washCycle);
+    WashCycleDTO toDto(WashCycle washCycle);
 }

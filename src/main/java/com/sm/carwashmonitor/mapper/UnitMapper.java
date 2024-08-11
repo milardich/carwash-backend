@@ -1,6 +1,6 @@
 package com.sm.carwashmonitor.mapper;
 
-import com.sm.carwashmonitor.dto.UnitDto;
+import com.sm.carwashmonitor.dto.UnitDTO;
 import com.sm.carwashmonitor.model.Unit;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -15,7 +15,7 @@ public interface UnitMapper {
     @Mapping(target = "totalWaterConsumption", source = "totalWaterConsumption")
     @Mapping(target = "totalDetergentConsumption", source = "totalDetergentConsumption")
     @Mapping(target = "totalWaxConsumption", source = "totalWaxConsumption")
-    Unit toEntity(UnitDto unitDto);
+    Unit toEntity(UnitDTO unitDto);
 
     @Mapping(target = "unitId", source = "unitId")
     @Mapping(target = "status", source = "status")
@@ -23,5 +23,5 @@ public interface UnitMapper {
     @Mapping(target = "totalWaterConsumption", source = "totalWaterConsumption")
     @Mapping(target = "totalDetergentConsumption", source = "totalDetergentConsumption")
     @Mapping(target = "totalWaxConsumption", source = "totalWaxConsumption")
-    UnitDto toDto(Unit unit);
+    UnitDTO toDto(Unit unit);
 }

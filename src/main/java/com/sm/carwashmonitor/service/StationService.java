@@ -1,12 +1,12 @@
 package com.sm.carwashmonitor.service;
 
-import com.sm.carwashmonitor.dto.StationRequestDto;
-import com.sm.carwashmonitor.dto.StationResponseDto;
+import com.sm.carwashmonitor.dto.StationDTO;
+import com.sm.carwashmonitor.dto.StationRequestDTO;
 
 import java.util.List;
 
 public interface StationService {
-    StationResponseDto createStation(StationRequestDto stationRequestDto);
-    StationResponseDto getStation(Long stationId);
-    List<StationResponseDto> getAllStations();
+    StationDTO createStation(StationRequestDTO stationRequestDto);
+    StationDTO getStation(Long stationId);
+    List<StationDTO> getAllStations();
 }

@@ -1,9 +1,8 @@
 package com.sm.carwashmonitor.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sm.carwashmonitor.dto.StationRequestDto;
-import com.sm.carwashmonitor.dto.StationResponseDto;
-import com.sm.carwashmonitor.exception.GenericValidationException;
+import com.sm.carwashmonitor.dto.StationDTO;
+import com.sm.carwashmonitor.dto.StationRequestDTO;
 import com.sm.carwashmonitor.service.StationService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -33,11 +31,11 @@ public class StationControllerTests {
     @Test
     void createStationReturn200() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        StationResponseDto stationResponseDto = new StationResponseDto();
-        StationRequestDto stationRequestDto = new StationRequestDto();
+        StationDTO stationDTO = new StationDTO();
+        StationRequestDTO stationRequestDto = new StationRequestDTO();
         fillStationRequestDto(stationRequestDto);
 
-        Mockito.when(stationService.createStation(stationRequestDto)).thenReturn(stationResponseDto);
+        Mockito.when(stationService.createStation(stationRequestDto)).thenReturn(stationDTO);
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/api/station")
@@ -50,11 +48,11 @@ public class StationControllerTests {
     @Test
     void createStationReturn404() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        StationRequestDto stationRequestDto = new StationRequestDto();
+        StationRequestDTO stationRequestDto = new StationRequestDTO();
         fillStationRequestDto(stationRequestDto);
         stationRequestDto.setStationName("");
 
-        Mockito.when(stationService.createStation(stationRequestDto)).thenReturn(new StationResponseDto());
+        Mockito.when(stationService.createStation(stationRequestDto)).thenReturn(new StationDTO());
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/api/statioTEST")
@@ -66,9 +64,9 @@ public class StationControllerTests {
 
     @Test
     void getStationByIdReturn200() throws Exception {
-        StationResponseDto stationResponseDto = new StationResponseDto();
+        StationDTO stationDTO = new StationDTO();
 
-        Mockito.when(stationService.getStation(1L)).thenReturn(stationResponseDto);
+        Mockito.when(stationService.getStation(1L)).thenReturn(stationDTO);
 
         mockMvc.perform(
             MockMvcRequestBuilders.get("/api/station/1")
@@ -91,7 +89,7 @@ public class StationControllerTests {
 
     @Test
     void getAllStationsReturn200() throws Exception {
-        List<StationResponseDto> stations = new ArrayList<>();
+        List<StationDTO> stations = new ArrayList<>();
 
         Mockito.when(stationService.getAllStations()).thenReturn(stations);
 
@@ -102,7 +100,7 @@ public class StationControllerTests {
         .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    void fillStationRequestDto(StationRequestDto stationRequestDto) {
+    void fillStationRequestDto(StationRequestDTO stationRequestDto) {
         stationRequestDto.setStationName("test");
         stationRequestDto.setCity("test");
         stationRequestDto.setStreetName("asd");

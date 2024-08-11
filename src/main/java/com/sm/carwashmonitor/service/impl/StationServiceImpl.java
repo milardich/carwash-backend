@@ -1,7 +1,7 @@
 package com.sm.carwashmonitor.service.impl;
 
-import com.sm.carwashmonitor.dto.StationRequestDto;
-import com.sm.carwashmonitor.dto.StationResponseDto;
+import com.sm.carwashmonitor.dto.StationDTO;
+import com.sm.carwashmonitor.dto.StationRequestDTO;
 import com.sm.carwashmonitor.mapper.StationMapper;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.repository.StationRepository;
@@ -21,7 +21,7 @@ public class StationServiceImpl implements StationService {
     private final StationValidation stationValidation;
 
     @Override
-    public StationResponseDto createStation(StationRequestDto stationRequestDto) {
+    public StationDTO createStation(StationRequestDTO stationRequestDto) {
         stationValidation.validate(stationRequestDto);
         Station station = stationMapper.toEntity(stationRequestDto);
         Station savedStation = stationRepository.save(station);
@@ -29,22 +29,22 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public StationResponseDto getStation(Long stationId) {
+    public StationDTO getStation(Long stationId) {
         Station station = stationRepository.findById(stationId).orElseThrow();
         return stationMapper.toDto(station);
     }
 
     @Override
-    public List<StationResponseDto> getAllStations() {
+    public List<StationDTO> getAllStations() {
         List<Station> stations = stationRepository.findAll();
         return toResponseDtos(stations);
     }
 
-    private List<StationResponseDto> toResponseDtos(List<Station> stations) {
-        List<StationResponseDto> stationResponseDtos = new ArrayList<>();
+    private List<StationDTO> toResponseDtos(List<Station> stations) {
+        List<StationDTO> stationDTOs = new ArrayList<>();
         stations.forEach(station -> {
-            stationResponseDtos.add(stationMapper.toDto(station));
+            stationDTOs.add(stationMapper.toDto(station));
         });
-        return stationResponseDtos;
+        return stationDTOs;
     }
 }

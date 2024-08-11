@@ -1,7 +1,7 @@
 package com.sm.carwashmonitor.controller;
 
-import com.sm.carwashmonitor.dto.WashCycleRequestDto;
-import com.sm.carwashmonitor.dto.WashCycleResponseDto;
+import com.sm.carwashmonitor.dto.WashCycleDTO;
+import com.sm.carwashmonitor.dto.WashCycleRequestDTO;
 import com.sm.carwashmonitor.service.WashCycleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,16 +18,16 @@ public class WashCycleController {
     private final WashCycleService washCycleService;
 
     @PostMapping
-    public WashCycleResponseDto createNewWashCycle(
+    public WashCycleDTO createNewWashCycle(
             @PathVariable(name = "stationId") Long stationId,
             @PathVariable(name = "unitId") Long unitId,
-            @RequestBody WashCycleRequestDto washCycleRequestDto
+            @RequestBody WashCycleRequestDTO washCycleRequestDto
     ) {
         return washCycleService.createNewWashCycle(stationId, unitId, washCycleRequestDto);
     }
 
     @GetMapping("/{washCycleId}")
-    public WashCycleResponseDto getWashCycle(
+    public WashCycleDTO getWashCycle(
             @PathVariable(name = "stationId") Long stationId,
             @PathVariable(name = "unitId") Long unitId,
             @PathVariable(name = "washCycleId") Long washCycleId
@@ -36,7 +36,7 @@ public class WashCycleController {
     }
 
     @GetMapping
-    public List<WashCycleResponseDto> getFilteredWashCycles(
+    public List<WashCycleDTO> getFilteredWashCycles(
             @PathVariable(name = "stationId") Long stationId,
             @PathVariable(name = "unitId") Long unitId,
             @RequestParam(name = "dateTimeFrom", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeFrom,

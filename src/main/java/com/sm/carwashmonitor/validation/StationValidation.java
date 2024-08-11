@@ -1,6 +1,6 @@
 package com.sm.carwashmonitor.validation;
 
-import com.sm.carwashmonitor.dto.StationRequestDto;
+import com.sm.carwashmonitor.dto.StationRequestDTO;
 import com.sm.carwashmonitor.exception.GenericValidationException;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.model.Unit;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class StationValidation {
 
     // todo: rename to validateRequest
-    public void validate(StationRequestDto stationRequestDto) {
+    public void validate(StationRequestDTO stationRequestDto) {
         HashMap<String, String> stationProperties = new HashMap<>();
         stationProperties.put("Station", stationRequestDto.getStationName());
         stationProperties.put("City", stationRequestDto.getCity());

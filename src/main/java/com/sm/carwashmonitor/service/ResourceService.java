@@ -1,8 +1,8 @@
 package com.sm.carwashmonitor.service;
 
-import com.sm.carwashmonitor.dto.ResourceUsageChartDataDTO;
+import com.sm.carwashmonitor.dto.ResourceChartDataDTO;
 import java.util.List;
 
 public interface ResourceService {
-    List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval);
+    List<ResourceChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval);
 }

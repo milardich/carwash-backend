@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UnitDto {
+public class UnitDTO {
     private Long unitId;
     private String status;
     private Integer coinTrayAmount;

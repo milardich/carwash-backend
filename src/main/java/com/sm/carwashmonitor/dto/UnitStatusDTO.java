@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UnitStatusDto {
+public class UnitStatusDTO {
     private String status;
 }

@@ -1,7 +1,7 @@
 package com.sm.carwashmonitor.repository.impl;
 
-import com.sm.carwashmonitor.dto.ResourceUsageChartDataDTO;
-import com.sm.carwashmonitor.mapper.ResourceUsageChartDataRowMapper;
+import com.sm.carwashmonitor.dto.ResourceChartDataDTO;
+import com.sm.carwashmonitor.mapper.ResourceChartDataRowMapper;
 import com.sm.carwashmonitor.repository.ResourceRepository;
 import com.sm.carwashmonitor.validation.DateTimeValidation;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ public class ResourceRepositoryImpl implements ResourceRepository {
     private DateTimeValidation dateTimeValidation;
 
     @Override
-    public List<ResourceUsageChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval) {
+    public List<ResourceChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval) {
         dateTimeValidation.validate(pgTimeInterval);
         /*
             day/days -> number of data points = number of days
@@ -43,6 +43,6 @@ public class ResourceRepositoryImpl implements ResourceRepository {
             "GROUP BY date_trunc('" + range + "', wc.wash_cycle_date) " +
             "ORDER BY date_trunc('" + range + "', wc.wash_cycle_date) ";
 
-        return jdbcTemplate.query(sql, new ResourceUsageChartDataRowMapper());
+        return jdbcTemplate.query(sql, new ResourceChartDataRowMapper());
     }
 }

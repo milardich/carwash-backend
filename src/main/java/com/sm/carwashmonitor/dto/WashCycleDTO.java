@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WashCycleResponseDto {
+public class WashCycleDTO {
     private Long washCycleId;
     private Long stationId;
     private Long unitId;

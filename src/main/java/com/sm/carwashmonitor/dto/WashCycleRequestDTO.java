@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WashCycleRequestDto {
+public class WashCycleRequestDTO {
     private Float waterConsumption;
     private Float detergentConsumption;
     private Float waxConsumption;

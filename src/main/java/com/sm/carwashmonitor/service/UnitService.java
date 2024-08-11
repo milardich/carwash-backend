@@ -1,12 +1,11 @@
 package com.sm.carwashmonitor.service;
 
-import com.sm.carwashmonitor.dto.StationResponseDto;
-import com.sm.carwashmonitor.dto.UnitDto;
-import com.sm.carwashmonitor.dto.UnitStatusDto;
-import com.sm.carwashmonitor.model.enumeration.UnitStatus;
+import com.sm.carwashmonitor.dto.StationDTO;
+import com.sm.carwashmonitor.dto.UnitDTO;
+import com.sm.carwashmonitor.dto.UnitStatusDTO;
 
 public interface UnitService {
-    StationResponseDto createUnit(Long stationId);
-    UnitDto updateUnitStatus(Long stationId, Long unitId, UnitStatusDto unitStatusDto);
-    UnitDto getUnit(Long stationId, Long unitId);
+    StationDTO createUnit(Long stationId);
+    UnitDTO updateUnitStatus(Long stationId, Long unitId, UnitStatusDTO unitStatusDto);
+    UnitDTO getUnit(Long stationId, Long unitId);
 }

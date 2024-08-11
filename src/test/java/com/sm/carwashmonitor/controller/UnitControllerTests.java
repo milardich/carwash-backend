@@ -1,9 +1,9 @@
 package com.sm.carwashmonitor.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sm.carwashmonitor.dto.StationResponseDto;
-import com.sm.carwashmonitor.dto.UnitDto;
-import com.sm.carwashmonitor.dto.UnitStatusDto;
+import com.sm.carwashmonitor.dto.StationDTO;
+import com.sm.carwashmonitor.dto.UnitDTO;
+import com.sm.carwashmonitor.dto.UnitStatusDTO;
 import com.sm.carwashmonitor.service.UnitService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,9 +37,9 @@ public class UnitControllerTests {
 
     @Test
     void testCreateUnitReturn200() throws Exception {
-        StationResponseDto stationResponseDto = new StationResponseDto();
+        StationDTO stationDTO = new StationDTO();
 
-        Mockito.when(unitService.createUnit(Mockito.any())).thenReturn(stationResponseDto);
+        Mockito.when(unitService.createUnit(Mockito.any())).thenReturn(stationDTO);
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/api/station/55/unit")
@@ -58,8 +58,8 @@ public class UnitControllerTests {
 
     @Test
     void updateUnitStatusReturn200() throws Exception {
-        UnitDto unitDto = new UnitDto();
-        UnitStatusDto unitStatusDto = new UnitStatusDto();
+        UnitDTO unitDto = new UnitDTO();
+        UnitStatusDTO unitStatusDto = new UnitStatusDTO();
         unitStatusDto.setStatus("INACTIVE");
 
         Mockito.when(unitService.updateUnitStatus(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(unitDto);
@@ -73,7 +73,7 @@ public class UnitControllerTests {
 
     @Test
     void updateUnitStatusReturn404() throws Exception {
-        UnitStatusDto unitStatusDto = new UnitStatusDto();
+        UnitStatusDTO unitStatusDto = new UnitStatusDTO();
         unitStatusDto.setStatus("asdf");
 
         Mockito.when(unitService.updateUnitStatus(Mockito.any(), Mockito.any(), Mockito.any())).thenThrow(new EntityNotFoundException("Status of type 'asdf' does not exist"));
@@ -87,7 +87,7 @@ public class UnitControllerTests {
 
     @Test
     void getUnitReturn200() throws Exception {
-        UnitDto unitDto = new UnitDto();
+        UnitDTO unitDto = new UnitDTO();
         Mockito.when(unitService.getUnit(Mockito.any(), Mockito.any())).thenReturn(unitDto);
         mockMvc.perform(
             MockMvcRequestBuilders.get("/api/station/55/unit/55")

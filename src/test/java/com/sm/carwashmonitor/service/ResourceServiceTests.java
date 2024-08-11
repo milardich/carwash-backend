@@ -1,7 +1,7 @@
 package com.sm.carwashmonitor.service;
 
-import com.sm.carwashmonitor.dto.ResourceConsumptionDto;
-import com.sm.carwashmonitor.dto.ResourceUsageChartDataDTO;
+import com.sm.carwashmonitor.dto.ResourceConsumptionDTO;
+import com.sm.carwashmonitor.dto.ResourceChartDataDTO;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.model.Unit;
 import com.sm.carwashmonitor.model.WashCycle;
@@ -48,9 +48,9 @@ public class ResourceServiceTests {
     WashCycle washCycle;
     List<Unit> units;
     List<WashCycle> washCycles;
-    ResourceConsumptionDto resourceConsumptionDto;
-    ResourceUsageChartDataDTO resourceUsageChartDataDTO;
-    List<ResourceUsageChartDataDTO> resourceUsageChartDataDTOs;
+    ResourceConsumptionDTO resourceConsumptionDto;
+    ResourceChartDataDTO resourceChartDataDTO;
+    List<ResourceChartDataDTO> resourceChartDataDTOs;
 
     @BeforeEach
     public void init() {
@@ -64,15 +64,15 @@ public class ResourceServiceTests {
         this.units = new ArrayList<>();
         this.washCycles = new ArrayList<>();
 
-        this.resourceUsageChartDataDTO = new ResourceUsageChartDataDTO();
-        this.resourceUsageChartDataDTO.setWashCycleDate("2024-01-01 11:11:11");
-        this.resourceUsageChartDataDTO.setTotalWaterConsumption(55.0F);
-        this.resourceUsageChartDataDTO.setTotalWaxConsumption(55.0F);
-        this.resourceUsageChartDataDTO.setTotalDetergentConsumption(55.0F);
-        this.resourceUsageChartDataDTOs = new ArrayList<>();
-        this.resourceUsageChartDataDTOs.add(this.resourceUsageChartDataDTO);
+        this.resourceChartDataDTO = new ResourceChartDataDTO();
+        this.resourceChartDataDTO.setWashCycleDate("2024-01-01 11:11:11");
+        this.resourceChartDataDTO.setTotalWaterConsumption(55.0F);
+        this.resourceChartDataDTO.setTotalWaxConsumption(55.0F);
+        this.resourceChartDataDTO.setTotalDetergentConsumption(55.0F);
+        this.resourceChartDataDTOs = new ArrayList<>();
+        this.resourceChartDataDTOs.add(this.resourceChartDataDTO);
 
-        this.resourceConsumptionDto = new ResourceConsumptionDto();
+        this.resourceConsumptionDto = new ResourceConsumptionDTO();
         this.resourceConsumptionDto.setConsumption(1.0F);
         this.resourceConsumptionDto.setDateTime(LocalDateTime.now());
 
@@ -90,11 +90,11 @@ public class ResourceServiceTests {
     void testGetResourceUsageChartDataReturnDTOList() throws Exception {
         Mockito.when(stationRepository.findById(Mockito.any())).thenReturn(Optional.of(this.station));
         Mockito.doNothing().when(dateTimeValidation).validate(Mockito.any());
-        Mockito.when(resourceRepository.getResourceUsageChartData(Mockito.any(), Mockito.any())).thenReturn(this.resourceUsageChartDataDTOs);
+        Mockito.when(resourceRepository.getResourceUsageChartData(Mockito.any(), Mockito.any())).thenReturn(this.resourceChartDataDTOs);
 
-        List<ResourceUsageChartDataDTO> actualResponse = resourceService.getResourceUsageChartData(55L, "30 days");
+        List<ResourceChartDataDTO> actualResponse = resourceService.getResourceUsageChartData(55L, "30 days");
 
-        Float expectedConsumption = this.resourceUsageChartDataDTOs.get(0).getTotalWaxConsumption();
+        Float expectedConsumption = this.resourceChartDataDTOs.get(0).getTotalWaxConsumption();
         Float actualConsumption = actualResponse.get(0).getTotalWaxConsumption();
 
         Assertions.assertEquals(expectedConsumption, actualConsumption);
