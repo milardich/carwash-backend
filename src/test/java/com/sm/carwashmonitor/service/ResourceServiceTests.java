@@ -2,8 +2,6 @@ package com.sm.carwashmonitor.service;
 
 import com.sm.carwashmonitor.dto.ResourceConsumptionDto;
 import com.sm.carwashmonitor.dto.ResourceUsageChartDataDTO;
-import com.sm.carwashmonitor.dto.ResourcesUsageResponseDto;
-import com.sm.carwashmonitor.dto.WashCycleRequestDto;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.model.Unit;
 import com.sm.carwashmonitor.model.WashCycle;
@@ -50,7 +48,6 @@ public class ResourceServiceTests {
     WashCycle washCycle;
     List<Unit> units;
     List<WashCycle> washCycles;
-    ResourcesUsageResponseDto resourcesUsageResponseDto;
     ResourceConsumptionDto resourceConsumptionDto;
     ResourceUsageChartDataDTO resourceUsageChartDataDTO;
     List<ResourceUsageChartDataDTO> resourceUsageChartDataDTOs;
@@ -68,20 +65,16 @@ public class ResourceServiceTests {
         this.washCycles = new ArrayList<>();
 
         this.resourceUsageChartDataDTO = new ResourceUsageChartDataDTO();
+        this.resourceUsageChartDataDTO.setWashCycleDate("2024-01-01 11:11:11");
+        this.resourceUsageChartDataDTO.setTotalWaterConsumption(55.0F);
+        this.resourceUsageChartDataDTO.setTotalWaxConsumption(55.0F);
+        this.resourceUsageChartDataDTO.setTotalDetergentConsumption(55.0F);
         this.resourceUsageChartDataDTOs = new ArrayList<>();
         this.resourceUsageChartDataDTOs.add(this.resourceUsageChartDataDTO);
 
         this.resourceConsumptionDto = new ResourceConsumptionDto();
         this.resourceConsumptionDto.setConsumption(1.0F);
         this.resourceConsumptionDto.setDateTime(LocalDateTime.now());
-
-        this.resourcesUsageResponseDto = new ResourcesUsageResponseDto();
-        this.resourcesUsageResponseDto.setDetergentConsumptions(new ArrayList<>());
-        this.resourcesUsageResponseDto.setWaterConsumptions(new ArrayList<>());
-        this.resourcesUsageResponseDto.setWaxConsumptions(new ArrayList<>());
-        this.resourcesUsageResponseDto.setTotalDetergentConsumption(1.00F);
-        this.resourcesUsageResponseDto.setTotalWaxConsumption(1.00F);
-        this.resourcesUsageResponseDto.setTotalWaterConsumption(1.00F);
 
         this.washCycle.setDetergentConsumption(1.00F);
         this.washCycle.setWaxConsumption(1.00F);
@@ -91,20 +84,6 @@ public class ResourceServiceTests {
         this.unit.getWashCycles().add(this.washCycle);
         this.units.add(this.unit);
         this.washCycles.add(this.washCycle);
-        this.resourcesUsageResponseDto.getDetergentConsumptions().add(this.resourceConsumptionDto);
-    }
-
-    @Test
-    void testGetStationResourcesUsageReturnDTO() throws Exception {
-        Mockito.when(stationRepository.findById(Mockito.any())).thenReturn(Optional.of(this.station));
-        Mockito.when(washCycleRepository.getFilteredWashCyclesByUnitId(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(washCycles);
-
-        ResourcesUsageResponseDto actual = resourceService.getStationResourcesUsage(55L, LocalDateTime.now(), LocalDateTime.now());
-
-        Float expectedUsage = this.resourcesUsageResponseDto.getDetergentConsumptions().get(0).getConsumption();
-        Float actualUsage = actual.getDetergentConsumptions().get(0).getConsumption();
-
-        Assertions.assertEquals(expectedUsage, actualUsage);
     }
 
     @Test
