@@ -57,8 +57,7 @@ ALTER SEQUENCE public.station_sequence OWNER TO postgres;
 CREATE TABLE public.unit (
     unit_id integer NOT NULL,
     station_id integer,
-    status character varying(20),
-    coin_tray_amount integer
+    status character varying(20)
 );
 
 
@@ -123,14 +122,14 @@ COPY public.station (station_id, station_name, city, street_name, street_number,
 -- Data for Name: unit; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.unit (unit_id, station_id, status, coin_tray_amount) FROM stdin;
-4	1	INACTIVE	0
-5	1	INACTIVE	0
-6	1	INACTIVE	0
-1	1	IN_USE	0
-3	1	AVAILABLE	0
-7	12	INACTIVE	0
-2	12	INACTIVE	0
+COPY public.unit (unit_id, station_id, status) FROM stdin;
+4	1	INACTIVE
+5	1	INACTIVE
+6	1	INACTIVE
+1	1	IN_USE
+3	1	AVAILABLE
+7	12	INACTIVE
+2	12	INACTIVE
 \.
 
 

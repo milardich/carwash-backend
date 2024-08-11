@@ -64,7 +64,6 @@ public class UnitServiceTests {
 
         this.unit = new Unit();
         this.unit.setStatus(UnitStatus.INACTIVE.name());
-        this.unit.setCoinTrayAmount(0);
         this.unit.setStation(this.station);
 
         this.stationDTO = new StationDTO();

@@ -1,6 +1,5 @@
 package com.sm.carwashmonitor.service;
 
-import com.sm.carwashmonitor.dto.ResourceConsumptionDTO;
 import com.sm.carwashmonitor.dto.ResourceChartDataDTO;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.model.Unit;
@@ -48,7 +47,6 @@ public class ResourceServiceTests {
     WashCycle washCycle;
     List<Unit> units;
     List<WashCycle> washCycles;
-    ResourceConsumptionDTO resourceConsumptionDto;
     ResourceChartDataDTO resourceChartDataDTO;
     List<ResourceChartDataDTO> resourceChartDataDTOs;
 
@@ -71,10 +69,6 @@ public class ResourceServiceTests {
         this.resourceChartDataDTO.setTotalDetergentConsumption(55.0F);
         this.resourceChartDataDTOs = new ArrayList<>();
         this.resourceChartDataDTOs.add(this.resourceChartDataDTO);
-
-        this.resourceConsumptionDto = new ResourceConsumptionDTO();
-        this.resourceConsumptionDto.setConsumption(1.0F);
-        this.resourceConsumptionDto.setDateTime(LocalDateTime.now());
 
         this.washCycle.setDetergentConsumption(1.00F);
         this.washCycle.setWaxConsumption(1.00F);

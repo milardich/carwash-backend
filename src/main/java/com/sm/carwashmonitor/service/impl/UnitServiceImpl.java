@@ -66,6 +66,5 @@ public class UnitServiceImpl implements UnitService {
 
     private void setDefaultUnitValues(Unit unit) {
         unit.setStatus(UnitStatus.INACTIVE.name());
-        unit.setCoinTrayAmount(0);
     }
 }

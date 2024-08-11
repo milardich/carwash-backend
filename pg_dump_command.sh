@@ -1,0 +1,1 @@
+pg_dump -E UTF8 -U postgres -h localhost carwash_db > dumped_data_carwash.sql

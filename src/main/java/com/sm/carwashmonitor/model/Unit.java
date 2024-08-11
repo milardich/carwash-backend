@@ -28,9 +28,6 @@ public class Unit {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "coin_tray_amount")
-    private Integer coinTrayAmount;
-
     @JsonManagedReference
     @OneToMany(mappedBy = "unit")
     private List<WashCycle> washCycles;

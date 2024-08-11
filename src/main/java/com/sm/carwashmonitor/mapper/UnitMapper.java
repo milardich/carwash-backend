@@ -11,11 +11,9 @@ public interface UnitMapper {
 
     @Mapping(target = "unitId", source = "unitId")
     @Mapping(target = "status", source = "status")
-    @Mapping(target = "coinTrayAmount", source = "coinTrayAmount")
     Unit toEntity(UnitDTO unitDto);
 
     @Mapping(target = "unitId", source = "unitId")
     @Mapping(target = "status", source = "status")
-    @Mapping(target = "coinTrayAmount", source = "coinTrayAmount")
     UnitDTO toDto(Unit unit);
 }

@@ -8,5 +8,4 @@ import lombok.Setter;
 public class UnitDTO {
     private Long unitId;
     private String status;
-    private Integer coinTrayAmount;
 }
