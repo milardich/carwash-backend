@@ -17,6 +17,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class WashCycleServiceImpl implements WashCycleService {
         stationValidation.validateStationContainsUnit(station, unit);
         WashCycle washCycle = washCycleMapper.toEntity(washCycleRequestDto);
         washCycle.setUnit(unit);
-        washCycle.setWashCycleDate(LocalDateTime.now());
+        washCycle.setWashCycleDate(LocalDateTime.now(ZoneId.of("Europe/Zagreb")));
         washCycleRepository.save(washCycle);
         WashCycleDTO washCycleDTO = washCycleMapper.toDto(washCycle);
         washCycleDTO.setStationId(stationId);
