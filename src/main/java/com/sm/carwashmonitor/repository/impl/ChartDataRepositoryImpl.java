@@ -17,7 +17,7 @@ public class ChartDataRepositoryImpl implements ChartDataRepository {
     private DateTimeValidation dateTimeValidation;
 
     @Override
-    public List<ResourceChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval) {
+    public List<ResourceChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval, String timezone) {
         dateTimeValidation.validate(pgTimeInterval);
         /*
             day/days -> number of data points = number of days
@@ -27,7 +27,7 @@ public class ChartDataRepositoryImpl implements ChartDataRepository {
         String range = pgTimeInterval.split("\\s+")[1].replace("\"", ""); // "1 day" -> "day"
         String sql =
             "SELECT " +
-                "date_trunc('" + range + "', wc.wash_cycle_date) AS wash_cycle_date, " +
+                "date_trunc('" + range + "', wc.wash_cycle_date) AT TIME ZONE 'UTC' AT TIME ZONE '" + timezone + "' AS wash_cycle_date, " +
                 "SUM(wc.water_consumption) AS total_water_consumption, " +
                 "SUM(wc.wax_consumption) AS total_wax_consumption, " +
                 "SUM(wc.detergent_consumption) AS total_detergent_consumption " +

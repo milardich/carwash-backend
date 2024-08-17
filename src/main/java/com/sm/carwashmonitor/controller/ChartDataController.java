@@ -16,9 +16,10 @@ public class ChartDataController {
     @GetMapping("/station/{stationId}/resource-consumption/chart-data")
     public List<ResourceChartDataDTO> getResourceUsageChartData(
             @PathVariable("stationId") Long stationId,
-            @RequestParam("pgTimeInterval") String pgTimeInterval
+            @RequestParam("pgTimeInterval") String pgTimeInterval,
+            @RequestParam(value = "timezone", required = false) String timezone
     ) {
-        return chartDataService.getResourceUsageChartData(stationId, pgTimeInterval);
+        return chartDataService.getResourceUsageChartData(stationId, pgTimeInterval, timezone);
     }
 
 }

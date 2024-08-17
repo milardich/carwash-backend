@@ -61,6 +61,7 @@ public class WashCycleServiceImpl implements WashCycleService {
         Unit unit = unitRepository.findById(unitId).orElseThrow(
                 () -> new EntityNotFoundException("Unit not found"));
 
+        // TODO: fix wash cycle date (correct timezone)
         WashCycle washCycle = washCycleRepository.findById(washCycleId).orElseThrow(
                 () -> new EntityNotFoundException("WashCycle not found"));
 
@@ -82,6 +83,7 @@ public class WashCycleServiceImpl implements WashCycleService {
 
         stationValidation.validateStationContainsUnit(station, unit);
 
+        // TODO: fix wash cycle date (correct timezone) in response
         List<WashCycle> filteredWashCycles = washCycleRepository.getFilteredWashCyclesByUnitId(unitId, dateFrom, dateTo);
         List<WashCycleDTO> filteredWashCyclesResponse = new ArrayList<>();
         filteredWashCycles.forEach(washCycle -> {

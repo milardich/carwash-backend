@@ -21,10 +21,12 @@ public class ChartDataServiceImpl implements ChartDataService {
     private final DateTimeValidation dateTimeValidation;
 
     /*
-     *   TODO: REFACTOR
+     *   TODO:
+     *      - REFACTOR
+     *      - validate timezone
      */
     @Override
-    public List<ResourceChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval) {
+    public List<ResourceChartDataDTO> getResourceUsageChartData(Long stationId, String pgTimeInterval, String timezone) {
         stationRepository.findById(stationId).orElseThrow(
                 () -> new EntityNotFoundException("Station not found"));
 
@@ -32,7 +34,7 @@ public class ChartDataServiceImpl implements ChartDataService {
 
         String pgTimeIntervalSuffix = pgTimeInterval.split("\\s+")[1].replace("\"", ""); // "1 day" -> "day"
 
-        List<ResourceChartDataDTO> usages = chartDataRepository.getResourceUsageChartData(stationId, pgTimeInterval);
+        List<ResourceChartDataDTO> usages = chartDataRepository.getResourceUsageChartData(stationId, pgTimeInterval, timezone);
 
         usages.forEach(u -> {
 
