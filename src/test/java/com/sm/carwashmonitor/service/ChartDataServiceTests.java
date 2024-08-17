@@ -83,9 +83,9 @@ public class ChartDataServiceTests {
     void testGetResourceUsageChartDataReturnDTOList() throws Exception {
         Mockito.when(stationRepository.findById(Mockito.any())).thenReturn(Optional.of(this.station));
         Mockito.doNothing().when(dateTimeValidation).validate(Mockito.any());
-        Mockito.when(chartDataRepository.getResourceUsageChartData(Mockito.any(), Mockito.any())).thenReturn(this.resourceChartDataDTOs);
+        Mockito.when(chartDataRepository.getResourceUsageChartData(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(this.resourceChartDataDTOs);
 
-        List<ResourceChartDataDTO> actualResponse = resourceService.getResourceUsageChartData(55L, "30 days");
+        List<ResourceChartDataDTO> actualResponse = resourceService.getResourceUsageChartData(55L, "30 days", "Europe/Zagreb");
 
         Float expectedConsumption = this.resourceChartDataDTOs.get(0).getTotalWaxConsumption();
         Float actualConsumption = actualResponse.get(0).getTotalWaxConsumption();
