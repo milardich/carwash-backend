@@ -8,6 +8,8 @@ import com.sm.carwashmonitor.validation.DateTimeValidation;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -37,7 +39,7 @@ public class ChartDataServiceImpl implements ChartDataService {
         List<ResourceChartDataDTO> usages = chartDataRepository.getResourceUsageChartData(stationId, pgTimeInterval, timezone);
 
         usages.forEach(u -> {
-
+            u.setWashCycleDate(u.getWashCycleDate().replaceAll("\\+.*$", ""));
             LocalDateTime dateTime = LocalDateTime.parse(u.getWashCycleDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             Integer year = dateTime.getYear();
             Integer month = dateTime.getMonthValue();

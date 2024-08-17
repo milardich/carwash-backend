@@ -29,9 +29,9 @@ public class UnitInfoRepositoryImpl implements UnitInfoRepository {
             "where " +
                 "wc.unit_id = '" + unitId + "'" +
                 " and " +
-                "wc.wash_cycle_date >= '" + dateTimeFrom + "' AT TIME ZONE 'UTC' AT TIME ZONE '" + timezone + "'" +
+                "wc.wash_cycle_date AT TIME ZONE '" + timezone + "' >= '" + dateTimeFrom + "' AT TIME ZONE '" + timezone + "'" +
                 " and " +
-                "wc.wash_cycle_date < '" + dateTimeTo + "' AT TIME ZONE 'UTC' AT TIME ZONE '" + timezone + "'";
+                "wc.wash_cycle_date AT TIME ZONE '" + timezone + "' < '" + dateTimeTo + "' AT TIME ZONE '" + timezone + "'";
         return jdbcTemplate.queryForObject(sql, new UnitInfoRowMapper());
     }
 }

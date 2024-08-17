@@ -27,21 +27,21 @@ public class ChartDataRepositoryImpl implements ChartDataRepository {
         String range = pgTimeInterval.split("\\s+")[1].replace("\"", ""); // "1 day" -> "day"
         String sql =
             "SELECT " +
-                "date_trunc('" + range + "', wc.wash_cycle_date) AT TIME ZONE 'UTC' AT TIME ZONE '" + timezone + "' AS wash_cycle_date, " +
+                "date_trunc('" + range + "', wc.wash_cycle_date AT TIME ZONE '" + timezone + "') AS wash_cycle_date, " +
                 "SUM(wc.water_consumption) AS total_water_consumption, " +
                 "SUM(wc.wax_consumption) AS total_wax_consumption, " +
                 "SUM(wc.detergent_consumption) AS total_detergent_consumption " +
             "FROM wash_cycle wc, unit u, station s " +
             "WHERE " +
-                "wc.wash_cycle_date > current_date - '" + pgTimeInterval + "'::interval " +
+                "wc.wash_cycle_date AT TIME ZONE '" + timezone + "' > current_date AT TIME ZONE '" + timezone + "' - '" + pgTimeInterval + "'::interval " +
                 "AND " +
                 "wc.unit_id = u.unit_id " +
                 "AND " +
                 "u.station_id = s.station_id " +
                 "AND " +
                 "s.station_id = " + stationId + " " +
-            "GROUP BY date_trunc('" + range + "', wc.wash_cycle_date) " +
-            "ORDER BY date_trunc('" + range + "', wc.wash_cycle_date) ";
+            "GROUP BY date_trunc('" + range + "', wc.wash_cycle_date AT TIME ZONE '" + timezone + "') " +
+            "ORDER BY date_trunc('" + range + "', wc.wash_cycle_date AT TIME ZONE '" + timezone + "') ";
 
         return jdbcTemplate.query(sql, new ResourceChartDataRowMapper());
     }
