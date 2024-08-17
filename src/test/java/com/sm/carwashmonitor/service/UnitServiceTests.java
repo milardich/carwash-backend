@@ -110,9 +110,9 @@ public class UnitServiceTests {
         unitInfoDTO.setWashCycleCount(1);
 
         Mockito.when(unitRepository.findById(Mockito.any())).thenReturn(Optional.of(new Unit()));
-        Mockito.when(unitRepository.getUnitInfo(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(unitInfoDTO);
+        Mockito.when(unitRepository.getUnitInfo(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(unitInfoDTO);
 
-        UnitInfoDTO actual = unitService.getUnitInfo(1L, "2024-01-01T00:00:00", "2024-08-10T23:59:59");
+        UnitInfoDTO actual = unitService.getUnitInfo(1L, "2024-01-01T00:00:00", "2024-08-10T23:59:59", "Europe/Zagreb");
 
         Assertions.assertEquals(unitInfoDTO.getWashCycleCount(), actual.getWashCycleCount());
     }

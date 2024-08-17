@@ -70,10 +70,10 @@ public class UnitServiceImpl implements UnitService {
         - validate dates
      */
     @Override
-    public UnitInfoDTO getUnitInfo(Long unitId, String dateTimeFrom, String dateTimeTo) {
+    public UnitInfoDTO getUnitInfo(Long unitId, String dateTimeFrom, String dateTimeTo, String timezone) {
         unitRepository.findById(unitId).orElseThrow(
                 () -> new EntityNotFoundException("Unit not found"));
-        return unitRepository.getUnitInfo(unitId, dateTimeFrom, dateTimeTo);
+        return unitRepository.getUnitInfo(unitId, dateTimeFrom, dateTimeTo, timezone);
     }
 
     private void setDefaultUnitValues(Unit unit) {

@@ -14,7 +14,7 @@ public class UnitInfoRepositoryImpl implements UnitInfoRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public UnitInfoDTO getUnitInfo(Long unitId, String dateTimeFrom, String dateTimeTo) {
+    public UnitInfoDTO getUnitInfo(Long unitId, String dateTimeFrom, String dateTimeTo, String timezone) {
         // TODO: validate dateTimes
 
         String sql =
@@ -29,9 +29,9 @@ public class UnitInfoRepositoryImpl implements UnitInfoRepository {
             "where " +
                 "wc.unit_id = '" + unitId + "'" +
                 " and " +
-                "wc.wash_cycle_date >= '" + dateTimeFrom + "'" +
+                "wc.wash_cycle_date >= '" + dateTimeFrom + "' AT TIME ZONE 'UTC' AT TIME ZONE '" + timezone + "'" +
                 " and " +
-                "wc.wash_cycle_date < '" + dateTimeTo + "'";
+                "wc.wash_cycle_date < '" + dateTimeTo + "' AT TIME ZONE 'UTC' AT TIME ZONE '" + timezone + "'";
         return jdbcTemplate.queryForObject(sql, new UnitInfoRowMapper());
     }
 }

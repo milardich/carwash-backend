@@ -39,8 +39,9 @@ public class UnitController {
     public UnitInfoDTO getUnitInfo(
             @PathVariable("unitId") Long unitId,
             @RequestParam("dateTimeFrom") String dateTimeFrom,
-            @RequestParam("dateTimeTo") String dateTimeTo
+            @RequestParam("dateTimeTo") String dateTimeTo,
+            @RequestParam(value = "timezone", required = false) String timezone
     ) {
-        return unitService.getUnitInfo(unitId, dateTimeFrom, dateTimeTo);
+        return unitService.getUnitInfo(unitId, dateTimeFrom, dateTimeTo, timezone);
     }
 }
