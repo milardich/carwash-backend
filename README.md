@@ -6,9 +6,21 @@
 - REST API for monitoring Car Wash stations
 
 ## Setup
+
+- ### Requirements
+  - Java 17
+  - Maven
+  - Docker
+- ### Clone this repository
+  - run `git clone https://github.com/milardich/carwash-backend.git`
 - ### Database setup
   - run `docker-compose up` from the root directory of this project
   - run `init_db.cmd` *(windows)* **OR** `init_db.sh` *(unix)* 
+  - Postgres container with dummy data should now be running in docker
+- ### Spring boot app setup
+  - run `mvn package`
+  - run `java -jar target/carwash-monitor-0.0.1-SNAPSHOT.jar`
+  - Rest api should now be running at `localhost:8080`
 
 ---
 
@@ -30,14 +42,6 @@
 ]
 ```
 ##### Response status: `200 OK`
-
----
-
-- ### Dev setup
-  - ### Requirements
-    - Java 17
-    - Maven
-    - PostgreSQL
 
 ---
 
@@ -120,27 +124,15 @@
    "units": [
      {
        "unitId": 3,
-       "status": "IN_USE",
-       "coinTrayAmount": 259,
-       "totalWaterConsumption": 4483.51,
-       "totalDetergentConsumption": 674.77,
-       "totalWaxConsumption": 351.12
+       "status": "IN_USE"
      },
      {
        "unitId": 4,
-       "status": "AVAILABLE",
-       "coinTrayAmount": 123,
-       "totalWaterConsumption": 2374.51,
-       "totalDetergentConsumption": 542.2,
-       "totalWaxConsumption": 121.66
+       "status": "AVAILABLE"
      },
      {
        "unitId": 5,
-       "status": "INACTIVE",
-       "coinTrayAmount": 67,
-       "totalWaterConsumption": 443.51,
-       "totalDetergentConsumption": 142.77,
-       "totalWaxConsumption": 19.89
+       "status": "INACTIVE"
      }
    ]
  }
@@ -170,11 +162,7 @@
       "units": [
         {
           "unitId": 3,
-          "status": "IN_USE",
-          "coinTrayAmount": 259,
-          "totalWaterConsumption": 4483.53,
-          "totalDetergentConsumption": 674.56,
-          "totalWaxConsumption": 351.19
+          "status": "IN_USE"
         }
       ]
     },
@@ -188,11 +176,7 @@
       "units": [
         {
           "unitId": 7,
-          "status": "AVAILABLE",
-          "coinTrayAmount": 532,
-          "totalWaterConsumption": 5231.55,
-          "totalDetergentConsumption": 312.21,
-          "totalWaxConsumption": 442.56
+          "status": "AVAILABLE"
         }
       ]
     }
@@ -222,21 +206,11 @@
    "units": [
      {
        "unitId": 5,
-       "status": "IN_USE",
-       "numberOfWashes": 46,
-       "coinTrayAmount": 259,
-       "totalWaterConsumption": 4483.21,
-       "totalDetergentConsumption": 674.11,
-       "totalWaxConsumption": 351.87
+       "status": "IN_USE"
      },
      {
        "unitId": 6,
-       "status": "INACTIVE",
-       "numberOfWashes": 0,
-       "coinTrayAmount": 0,
-       "totalWaterConsumption": 0.00,
-       "totalDetergentConsumption": 0.00,
-       "totalWaxConsumption": 0.00
+       "status": "INACTIVE"
      }
    ]
  }
@@ -259,11 +233,7 @@
 ```json
 {
     "unitId": 5,
-    "status": "IN_USE",
-    "coinTrayAmount": 259,
-    "totalWaterConsumption": 4483.21,
-    "totalDetergentConsumption": 674.11,
-    "totalWaxConsumption": 351.87
+    "status": "IN_USE"
 }
 ```
 ##### Response status: `200 OK`
@@ -285,11 +255,7 @@
 ```json
 {
   "unitId": 11,
-  "status": "IN_USE",
-  "coinTrayAmount": 0,
-  "totalWaterConsumption": 421.5,
-  "totalDetergentConsumption": 51.21,
-  "totalWaxConsumption": 61.2
+  "status": "IN_USE"
 }
 ```
 ##### Response status: `200 OK`
