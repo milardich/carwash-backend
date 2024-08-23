@@ -37,11 +37,12 @@ public class UnitController {
 
     @GetMapping("/{unitId}/info")
     public UnitInfoDTO getUnitInfo(
+            @PathVariable("stationId") Long stationId,
             @PathVariable("unitId") Long unitId,
             @RequestParam("dateTimeFrom") String dateTimeFrom,
             @RequestParam("dateTimeTo") String dateTimeTo,
             @RequestParam(value = "timezone", required = false) String timezone
     ) {
-        return unitService.getUnitInfo(unitId, dateTimeFrom, dateTimeTo, timezone);
+        return unitService.getUnitInfo(stationId, unitId, dateTimeFrom, dateTimeTo, timezone);
     }
 }

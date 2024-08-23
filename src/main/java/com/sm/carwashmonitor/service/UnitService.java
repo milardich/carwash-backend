@@ -9,5 +9,5 @@ public interface UnitService {
     StationDTO createUnit(Long stationId);
     UnitDTO updateUnitStatus(Long stationId, Long unitId, UnitStatusDTO unitStatusDto);
     UnitDTO getUnit(Long stationId, Long unitId);
-    UnitInfoDTO getUnitInfo(Long unitId, String dateTimeFrom, String dateTimeTo, String timezone);
+    UnitInfoDTO getUnitInfo(Long stationId, Long unitId, String dateTimeFrom, String dateTimeTo, String timezone);
 }

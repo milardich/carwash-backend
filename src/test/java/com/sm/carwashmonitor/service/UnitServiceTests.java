@@ -10,6 +10,7 @@ import com.sm.carwashmonitor.model.enumeration.UnitStatus;
 import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.repository.UnitRepository;
 import com.sm.carwashmonitor.service.impl.UnitServiceImpl;
+import com.sm.carwashmonitor.validation.StationValidation;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +36,9 @@ public class UnitServiceTests {
 
     @Spy
     private StationMapper stationMapper;
+
+    @Spy
+    private StationValidation stationValidation;
 
     @Spy
     private UnitMapper unitMapper;
@@ -109,10 +113,12 @@ public class UnitServiceTests {
         unitInfoDTO.setTotalCoinAmount(1);
         unitInfoDTO.setWashCycleCount(1);
 
-        Mockito.when(unitRepository.findById(Mockito.any())).thenReturn(Optional.of(new Unit()));
+        Mockito.when(stationRepository.findById(Mockito.any())).thenReturn(Optional.of(this.station));
+        Mockito.when(unitRepository.findById(Mockito.any())).thenReturn(Optional.of(this.unit));
+        Mockito.doNothing().when(stationValidation).validateStationContainsUnit(this.station, this.unit);
         Mockito.when(unitRepository.getUnitInfo(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(unitInfoDTO);
 
-        UnitInfoDTO actual = unitService.getUnitInfo(1L, "2024-01-01T00:00:00", "2024-08-10T23:59:59", "Europe/Zagreb");
+        UnitInfoDTO actual = unitService.getUnitInfo(1L, 1L, "2024-01-01T00:00:00", "2024-08-10T23:59:59", "Europe/Zagreb");
 
         Assertions.assertEquals(unitInfoDTO.getWashCycleCount(), actual.getWashCycleCount());
     }
