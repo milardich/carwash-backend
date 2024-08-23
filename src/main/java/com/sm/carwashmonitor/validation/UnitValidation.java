@@ -1,5 +1,6 @@
 package com.sm.carwashmonitor.validation;
 
+import com.sm.carwashmonitor.exception.GenericValidationException;
 import com.sm.carwashmonitor.model.Unit;
 import com.sm.carwashmonitor.model.WashCycle;
 import com.sm.carwashmonitor.model.enumeration.UnitStatus;
@@ -28,6 +29,14 @@ public class UnitValidation {
     public void validateUnitCointainsWashCycle(Unit unit, WashCycle washCycle) {
         if(!unit.getWashCycles().contains(washCycle)) {
             throw new EntityNotFoundException("Unit does not contain wash cycle");
+        }
+    }
+
+    public void checkIfStatusAvailable(Unit unit) {
+        if( unit.getStatus().equals(UnitStatus.INACTIVE.name()) ||
+            unit.getStatus().equals(UnitStatus.IN_USE.name())
+        ) {
+            throw new GenericValidationException("Unit is not available");
         }
     }
 }
