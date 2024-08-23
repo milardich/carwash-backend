@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"stationName\": \"Jankovci-1\",\r\n  \"city\": \"Stari Jankovci\",\r\n  \"streetName\": \"Vladimira Nazora\",\r\n  \"streetNumber\": \"15\",\r\n  \"country\": \"Croatia\"\r\n}",
+					"raw": "{\r\n  \"stationName\": \"\",\r\n  \"city\": \"tttt\",\r\n  \"streetName\": \"Epic Ulica\",\r\n  \"streetNumber\": \"1\",\r\n  \"country\": \"Croatia\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -60,7 +60,8 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/station",
+					"raw": "http://localhost:8080/api/station",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
@@ -78,8 +79,17 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:8080/api/station/1/unit",
+					"raw": "localhost:8080/api/station/44/unit",
 					"host": [
 						"localhost"
 					],
@@ -87,7 +97,7 @@
 					"path": [
 						"api",
 						"station",
-						"1",
+						"44",
 						"unit"
 					]
 				}
@@ -101,7 +111,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"status\": \"IN_USE\"\r\n}",
+					"raw": "{\r\n  \"status\": \"AVAILABLE\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -109,7 +119,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/station/1/unit/2/status",
+					"raw": "localhost:8080/api/station/1/unit/1/status",
 					"host": [
 						"localhost"
 					],
@@ -119,7 +129,7 @@
 						"station",
 						"1",
 						"unit",
-						"2",
+						"1",
 						"status"
 					]
 				}
@@ -133,7 +143,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"waterConsumption\": 6.66,\r\n  \"detergentConsumption\": 88.92,\r\n  \"waxConsumption\": 2.61,\r\n  \"coinAmount\": 3\r\n}\r\n\r\n\r\n",
+					"raw": "{\r\n  \"waterConsumption\": 800.21,\r\n  \"detergentConsumption\": 9.92,\r\n  \"waxConsumption\": 11.61,\r\n  \"coinAmount\": 2\r\n}\r\n\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -141,7 +151,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/station/1/unit/2/wash-cycle",
+					"raw": "localhost:8080/api/station/1/unit/1/wash-cycle",
 					"host": [
 						"localhost"
 					],
@@ -151,7 +161,7 @@
 						"station",
 						"1",
 						"unit",
-						"2",
+						"1",
 						"wash-cycle"
 					]
 				}
@@ -176,7 +186,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/station/1/unit/2/wash-cycle/4",
+					"raw": "localhost:8080/api/station/2/unit/11/wash-cycle/72",
 					"host": [
 						"localhost"
 					],
@@ -184,11 +194,11 @@
 					"path": [
 						"api",
 						"station",
-						"1",
-						"unit",
 						"2",
+						"unit",
+						"11",
 						"wash-cycle",
-						"4"
+						"72"
 					]
 				}
 			},
@@ -200,7 +210,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/station/1/unit/2/wash-cycle?dateTimeFrom=2022-06-11T21:00:00.000&dateTimeTo=2024-06-11T22:30:00.000",
+					"raw": "localhost:8080/api/station/1/unit/4/wash-cycle?dateTimeFrom=2024-05-11T21:00:00.000&dateTimeTo=2024-07-29T22:30:00.000",
 					"host": [
 						"localhost"
 					],
@@ -210,18 +220,265 @@
 						"station",
 						"1",
 						"unit",
-						"2",
+						"4",
 						"wash-cycle"
 					],
 					"query": [
 						{
 							"key": "dateTimeFrom",
-							"value": "2022-06-11T21:00:00.000"
+							"value": "2024-05-11T21:00:00.000"
 						},
 						{
 							"key": "dateTimeTo",
-							"value": "2024-06-11T22:30:00.000"
+							"value": "2024-07-29T22:30:00.000"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Unit Info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/station/1/unit/1/info?dateTimeFrom=2024-08-23T00:00:00&dateTimeTo=2024-08-23T22:42:00&timezone=Europe/Warsaw",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"1",
+						"unit",
+						"1",
+						"info"
+					],
+					"query": [
+						{
+							"key": "dateTimeFrom",
+							"value": "2024-08-23T00:00:00"
+						},
+						{
+							"key": "dateTimeTo",
+							"value": "2024-08-23T22:42:00"
+						},
+						{
+							"key": "timezone",
+							"value": "Europe/Warsaw"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get unit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/station/1/unit/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"1",
+						"unit",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Resource Chart Data",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/resources/station/1/resource-consumption/chart-data?pgTimeInterval=24 hours&timezone=Europe/Zagreb",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"resources",
+						"station",
+						"1",
+						"resource-consumption",
+						"chart-data"
+					],
+					"query": [
+						{
+							"key": "pgTimeInterval",
+							"value": "24 hours"
+						},
+						{
+							"key": "timezone",
+							"value": "Europe/Zagreb"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VM TEST request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.8.150:8080/api/resources/station/1/resource-consumption/chart-data?pgTimeInterval=\"30 days\"",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"8",
+						"150"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"resources",
+						"station",
+						"1",
+						"resource-consumption",
+						"chart-data"
+					],
+					"query": [
+						{
+							"key": "pgTimeInterval",
+							"value": "\"30 days\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HETZNER VM TEST",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://188.245.49.127:8080/api/resources/station/1/resource-consumption/chart-data?pgTimeInterval=\"30 days\"",
+					"protocol": "http",
+					"host": [
+						"188",
+						"245",
+						"49",
+						"127"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"resources",
+						"station",
+						"1",
+						"resource-consumption",
+						"chart-data"
+					],
+					"query": [
+						{
+							"key": "pgTimeInterval",
+							"value": "\"30 days\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HETZNER VM TEST Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://188.245.49.127:8080/api/station/1/unit/6/info?dateTimeFrom=2024-08-17T00:00:00&dateTimeTo=2024-08-17T00:04:39",
+					"protocol": "http",
+					"host": [
+						"188",
+						"245",
+						"49",
+						"127"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"1",
+						"unit",
+						"6",
+						"info"
+					],
+					"query": [
+						{
+							"key": "dateTimeFrom",
+							"value": "2024-08-17T00:00:00"
+						},
+						{
+							"key": "dateTimeTo",
+							"value": "2024-08-17T00:04:39"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HETZNER VM TEST washcycle",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"waterConsumption\": 9000.21,\r\n  \"detergentConsumption\": 0.92,\r\n  \"waxConsumption\": 0.61,\r\n  \"coinAmount\": 1\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://188.245.49.127:8080/api/station/1/unit/1/wash-cycle",
+					"protocol": "http",
+					"host": [
+						"188",
+						"245",
+						"49",
+						"127"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"station",
+						"1",
+						"unit",
+						"1",
+						"wash-cycle"
 					]
 				}
 			},
