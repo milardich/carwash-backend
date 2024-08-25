@@ -43,7 +43,7 @@ public class WashCycleServiceImpl implements WashCycleService {
         Unit unit = unitRepository.findById(unitId).orElseThrow(
                 () -> new EntityNotFoundException("Unit not found"));
 
-        unitValidation.checkIfStatusAvailable(unit);
+        unitValidation.checkStatusInUse(unit);
         stationValidation.validateStationContainsUnit(station, unit);
         WashCycle washCycle = washCycleMapper.toEntity(washCycleRequestDto);
         washCycle.setUnit(unit);

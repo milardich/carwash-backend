@@ -32,11 +32,9 @@ public class UnitValidation {
         }
     }
 
-    public void checkIfStatusAvailable(Unit unit) {
-        if( unit.getStatus().equals(UnitStatus.INACTIVE.name()) ||
-            unit.getStatus().equals(UnitStatus.IN_USE.name())
-        ) {
-            throw new GenericValidationException("Unit is not available");
+    public void checkStatusInUse(Unit unit) {
+        if(!unit.getStatus().equals(UnitStatus.IN_USE.name())) {
+            throw new GenericValidationException("Unit is not IN_USE");
         }
     }
 }
