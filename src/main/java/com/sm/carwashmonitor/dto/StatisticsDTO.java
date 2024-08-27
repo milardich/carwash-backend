@@ -12,9 +12,9 @@ public class StatisticsDTO {
     String bestStationName;
     Float bestStationRevenue;
     Integer totalWashCount;
-    Integer totalWaterConsumption;
-    Integer totalWaxConsumption;
-    Integer totalDetergentConsumption;
+    Float totalWaterConsumption;
+    Float totalWaxConsumption;
+    Float totalDetergentConsumption;
 
     /*
     * This is calculated in service layer
