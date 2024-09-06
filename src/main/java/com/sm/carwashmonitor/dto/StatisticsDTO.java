@@ -22,4 +22,11 @@ public class StatisticsDTO {
     Float totalWaterCost;
     Float totalWaxCost;
     Float totalDetergentCost;
+
+    // TODO:
+    /*
+    *   String revenuePercentIncrease;
+    *   String washCountPercentIncrease;
+    *   List<StationInfo> stationInfos;
+    *  */
 }

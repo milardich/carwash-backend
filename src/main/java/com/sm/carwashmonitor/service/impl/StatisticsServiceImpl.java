@@ -15,7 +15,34 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public StatisticsDTO getStatistics(String dateTimeFrom, String dateTimeTo, String timezone) {
-        // TODO: calculate consumption costs
-        return statisticsRepository.getStatistics(dateTimeFrom, dateTimeTo, timezone);
+        StatisticsDTO stats = statisticsRepository.getStatistics(dateTimeFrom, dateTimeTo, timezone);
+        setCosts(stats);
+        calculateTotalRevenue(stats);
+        return stats;
+    }
+
+    private void setCosts(StatisticsDTO statisticsDTO) {
+        // per liter price (eur)
+        final Float waterPrice = 0.00183F;
+        final Float waxPrice = 5.480F;
+        final Float detergentPrice = 3.71F;
+
+        statisticsDTO.setTotalWaxCost(
+            statisticsDTO.getTotalWaxConsumption() * waxPrice
+        );
+        statisticsDTO.setTotalWaterCost(
+            statisticsDTO.getTotalWaterConsumption() * waterPrice
+        );
+        statisticsDTO.setTotalDetergentCost(
+            statisticsDTO.getTotalDetergentConsumption() * detergentPrice
+        );
+    }
+
+    private void calculateTotalRevenue(StatisticsDTO statisticsDTO) {
+        // eur
+        final Float priceOfCoin = 2.0F;
+        statisticsDTO.setTotalRevenue(
+                statisticsDTO.getTotalRevenue() * priceOfCoin
+        );
     }
 }
