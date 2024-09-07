@@ -4,12 +4,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class StatisticsDTO {
+public class StatisticsHighlightsDTO {
     Float totalRevenue;
     String bestStationName;
     Float bestStationRevenue;
@@ -17,10 +15,6 @@ public class StatisticsDTO {
     Float totalWaterConsumption;
     Float totalWaxConsumption;
     Float totalDetergentConsumption;
-
-    /*
-    * 1 coin = 1 euro
-    * */
     Float totalWaterCost;
     Float totalWaxCost;
     Float totalDetergentCost;
@@ -29,7 +23,4 @@ public class StatisticsDTO {
     *   String revenuePercentIncrease;
     *   String washCountPercentIncrease;
     *  */
-
-    List<StationStatisticsDTO> allStationsStatistics;
-    StationStatisticsDTO totalStationsStatistics; //bottom of the table
 }
