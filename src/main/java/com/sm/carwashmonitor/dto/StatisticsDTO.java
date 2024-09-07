@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Getter
 @Setter
@@ -17,16 +19,17 @@ public class StatisticsDTO {
     Float totalDetergentConsumption;
 
     /*
-    * This is calculated in service layer
+    * 1 coin = 1 euro
     * */
     Float totalWaterCost;
     Float totalWaxCost;
     Float totalDetergentCost;
 
-    // TODO:
-    /*
+    /* TODO:
     *   String revenuePercentIncrease;
     *   String washCountPercentIncrease;
-    *   List<StationInfo> stationInfos;
     *  */
+
+    List<StationStatisticsDTO> allStationsStatistics;
+    StationStatisticsDTO totalStationsStatistics; //bottom of the table
 }

@@ -1,11 +1,14 @@
 package com.sm.carwashmonitor.service.impl;
 
+import com.sm.carwashmonitor.dto.StationStatisticsDTO;
 import com.sm.carwashmonitor.dto.StatisticsDTO;
-import com.sm.carwashmonitor.dto.WashCycleDTO;
 import com.sm.carwashmonitor.repository.StatisticsRepository;
 import com.sm.carwashmonitor.service.StatisticsService;
+import com.sm.carwashmonitor.util.CarwashResourceUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,15 +20,21 @@ public class StatisticsServiceImpl implements StatisticsService {
     public StatisticsDTO getStatistics(String dateTimeFrom, String dateTimeTo, String timezone) {
         StatisticsDTO stats = statisticsRepository.getStatistics(dateTimeFrom, dateTimeTo, timezone);
         setCosts(stats);
-        calculateTotalRevenue(stats);
         return stats;
     }
 
+    @Override
+    public List<StationStatisticsDTO> getAllStationsStatistics(String dateTimeFrom, String dateTimeTo, String timezone) {
+        List<StationStatisticsDTO> allStationsStats = statisticsRepository.getAllStationsStatistics(dateTimeFrom, dateTimeTo, timezone);
+        return allStationsStats;
+    }
+
+
     private void setCosts(StatisticsDTO statisticsDTO) {
         // per liter price (eur)
-        final Float waterPrice = 0.00183F;
-        final Float waxPrice = 5.480F;
-        final Float detergentPrice = 3.71F;
+        Float waterPrice = CarwashResourceUtil.getWaterPrice();
+        Float waxPrice = CarwashResourceUtil.getWaxPrice();
+        Float detergentPrice = CarwashResourceUtil.getDetergentPrice();
 
         statisticsDTO.setTotalWaxCost(
             statisticsDTO.getTotalWaxConsumption() * waxPrice
@@ -35,14 +44,6 @@ public class StatisticsServiceImpl implements StatisticsService {
         );
         statisticsDTO.setTotalDetergentCost(
             statisticsDTO.getTotalDetergentConsumption() * detergentPrice
-        );
-    }
-
-    private void calculateTotalRevenue(StatisticsDTO statisticsDTO) {
-        // eur
-        final Float priceOfCoin = 2.0F;
-        statisticsDTO.setTotalRevenue(
-                statisticsDTO.getTotalRevenue() * priceOfCoin
         );
     }
 }
