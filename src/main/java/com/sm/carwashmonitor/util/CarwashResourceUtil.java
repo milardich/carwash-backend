@@ -6,46 +6,45 @@ import org.json.JSONObject;
 
 public class CarwashResourceUtil {
 
-    public static Double getWaterPrice() {
+    public static Float getWaterPrice() {
         String prices = FileReaderUtil.readStringFromFile("CarwashResourcePrices.json");
         JSONObject obj = new JSONObject(prices);
-        return (Double) obj.get("waterCost");
-//        return obj.getFloat("waterCost");
+        return Double.valueOf(obj.getDouble("waterCost")).floatValue();
     }
 
-    public static Double getWaxPrice() {
+    public static Float getWaxPrice() {
         String prices = FileReaderUtil.readStringFromFile("CarwashResourcePrices.json");
         JSONObject obj = new JSONObject(prices);
-        return (Double) obj.get("waxCost");
+        return Double.valueOf(obj.getDouble("waxCost")).floatValue();
     }
 
-    public static Double getDetergentPrice() {
+    public static Float getDetergentPrice() {
         String prices = FileReaderUtil.readStringFromFile("CarwashResourcePrices.json");
         JSONObject obj = new JSONObject(prices);
-        return (Double) obj.get("detergentCost");
+        return Double.valueOf(obj.getDouble("detergentCost")).floatValue();
     }
 
     public static void setCosts(StatisticsHighlightsDTO statisticsDTO) {
         // per liter price (eur)
-        Double waterPrice = getWaterPrice();
-        Double waxPrice = getWaxPrice();
-        Double detergentPrice = getDetergentPrice();
+        Float waterPrice = getWaterPrice();
+        Float waxPrice = getWaxPrice();
+        Float detergentPrice = getDetergentPrice();
 
         statisticsDTO.setTotalWaxCost(
-                statisticsDTO.getTotalWaxConsumption() * waxPrice.floatValue()
+                statisticsDTO.getTotalWaxConsumption() * waxPrice
         );
         statisticsDTO.setTotalWaterCost(
-                statisticsDTO.getTotalWaterConsumption() * waterPrice.floatValue()
+                statisticsDTO.getTotalWaterConsumption() * waterPrice
         );
         statisticsDTO.setTotalDetergentCost(
-                statisticsDTO.getTotalDetergentConsumption() * detergentPrice.floatValue()
+                statisticsDTO.getTotalDetergentConsumption() * detergentPrice
         );
     }
 
     public static void setCosts(StatisticsSummaryDTO statisticsSummary) {
-        Double waterPrice = getWaterPrice();
-        Double waxPrice = getWaxPrice();
-        Double detergentPrice = getDetergentPrice();
+        Float waterPrice = getWaterPrice();
+        Float waxPrice = getWaxPrice();
+        Float detergentPrice = getDetergentPrice();
 
         statisticsSummary.setTotalWaxCost(0.0F);
         statisticsSummary.setTotalWaterCost(0.0F);
