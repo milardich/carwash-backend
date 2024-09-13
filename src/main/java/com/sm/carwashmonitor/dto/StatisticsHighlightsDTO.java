@@ -18,9 +18,4 @@ public class StatisticsHighlightsDTO {
     Float totalWaterCost;
     Float totalWaxCost;
     Float totalDetergentCost;
-
-    /* TODO:
-    *   String revenuePercentIncrease;
-    *   String washCountPercentIncrease;
-    *  */
 }
