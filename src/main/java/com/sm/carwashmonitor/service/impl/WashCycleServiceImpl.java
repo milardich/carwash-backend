@@ -6,6 +6,7 @@ import com.sm.carwashmonitor.mapper.WashCycleMapper;
 import com.sm.carwashmonitor.model.Station;
 import com.sm.carwashmonitor.model.Unit;
 import com.sm.carwashmonitor.model.WashCycle;
+import com.sm.carwashmonitor.repository.DummyWashcycleRepository;
 import com.sm.carwashmonitor.repository.StationRepository;
 import com.sm.carwashmonitor.repository.UnitRepository;
 import com.sm.carwashmonitor.repository.WashCycleRepository;
@@ -32,6 +33,7 @@ public class WashCycleServiceImpl implements WashCycleService {
     private final StationValidation stationValidation;
     private final UnitValidation unitValidation;
     private final WashCycleValidation washCycleValidation;
+    private final DummyWashcycleRepository dummyWashcycleRepository;
 
     @Override
     public WashCycleDTO createNewWashCycle(Long stationId, Long unitId, WashCycleRequestDTO washCycleRequestDto) {
@@ -93,5 +95,18 @@ public class WashCycleServiceImpl implements WashCycleService {
             filteredWashCyclesResponse.add(washCycleDTO);
         });
         return filteredWashCyclesResponse;
+    }
+
+    @Override
+    public Integer createDummyWashCycle(Long stationId, Long unitId, WashCycleRequestDTO washCycleRequestDTO, String washCycleDate, Long washCycleId) {
+        Station station = stationRepository.findById(stationId).orElseThrow(
+                () -> new EntityNotFoundException("Station not found"));
+
+        Unit unit = unitRepository.findById(unitId).orElseThrow(
+                () -> new EntityNotFoundException("Unit not found"));
+
+        stationValidation.validateStationContainsUnit(station, unit);
+
+        return dummyWashcycleRepository.createDummyWashCycle(stationId, unitId, washCycleRequestDTO, washCycleDate, washCycleId);
     }
 }

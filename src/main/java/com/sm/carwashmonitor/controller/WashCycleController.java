@@ -44,4 +44,16 @@ public class WashCycleController {
     ) {
         return washCycleService.getFilteredWashCycles(stationId, unitId, dateTimeFrom, dateTimeTo);
     }
+
+    // Used to fill dummy data
+    @PostMapping("/dummy")
+    public Integer createDummyWashCycle(
+            @PathVariable(name = "stationId") Long stationId,
+            @PathVariable(name = "unitId") Long unitId,
+            @RequestParam(name = "washCycleDate") String washCycleDate,
+            @RequestParam(name = "washCycleId") Long washCycleId,
+            @RequestBody WashCycleRequestDTO washCycleRequestDto
+    ) {
+        return washCycleService.createDummyWashCycle(stationId, unitId, washCycleRequestDto, washCycleDate, washCycleId);
+    }
 }
